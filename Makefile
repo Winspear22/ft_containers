@@ -2,7 +2,7 @@ NAME = ft_containers
 NAME_T = container_test
 
 SRCS = srcs/main.cpp
-SRCS_T = srcs/test.cpp
+SRCS_T = srcs/test.cpp srcs/A.cpp
 
 INCLUDE= vector.hpp
 
