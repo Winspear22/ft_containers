@@ -1,35 +1,33 @@
 # include "vector.hpp"
+# include <vector>
 
 int main( void )
 {
 	ft::vector<std::string> vector;
 
+
 	vector.SetTab("salut mon gars");
 
 	ft::vector<std::string> vector2(vector);
-	ft::vector<std::string> vector3 = vector2;
-	//ft::vector<std::string> vector4(5, 0);
 
+	ft::vector<int> vector4(10, 0);
+	ft::vector<int> vector5(0, 0);
+	ft::vector<std::string> popo(5, "salut les gars");
 	std::cout << "vector == " << vector.GetTab() << std::endl;
 	std::cout << "vector2 == " << vector2.GetTab() << std::endl;
-	std::cout << "vector3 == " << vector3.GetTab() << std::endl;
+	ft::vector<int> vector3(vector4);
+	ft::vector<int> vector6(vector5);
 
+	vector2 = vector;
+	vector3 = vector6;
 
-//	ft::vector<A> popo;
+/*	ft::vector<std::string> vector;
+	ft::vector<std::string> vector2(100, "salut les gars");
 
-	/*if (vector == vector2)
-		std::cout << "vector2 == vector" << std::endl;
-	else
-		std::cout << "vector2 != vector" << std::endl;
-	if (vector2 == vector3)
-		std::cout << "vector3 == vector2" << std::endl;
-	else
-		std::cout << "vector3 != vector2" << std::endl;
-	if (vector == vector3)
-		std::cout << "vector3 == vector" << std::endl;
-	else
-		std::cout << "vector3 != vector" << std::endl;
+	ft::vector<int> vector3;
+	ft::vector<int> vector4(100, 1);
 
-*/
+	vector = vector2;
+	vector3 = vector4;*/
     return (0);
 }
