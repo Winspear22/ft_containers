@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/04 23:02:04 by adaloui          ###   ########.fr       */
+/*   Updated: 2023/02/05 21:38:12 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,47 @@ namespace ft
 	class vector
 	{
 		public:
-			vector<T>( void )
+			typedef T											value_type;
+			typedef Allocator									allocator_type;
+			typedef typename allocator_type::reference			reference;
+			typedef typename allocator_type::const_reference	const_reference;
+			typedef typename allocator_type::pointer			pointer;
+			typedef typename allocator_type::const_pointer		const_pointer;
+			/*
+			typedef 		 inconnu							iterator;
+			typedef			 inconnu							const_iterator;
+			typedef			 inconnu							reverse_iterator;
+			typedef			 inconnu							const_reverse_iterator;
+			*/
+			typedef typename allocator_type::difference_type	difference_type;
+			typedef typename allocator_type::size_type			size_type;
+			
+			explicit vector (const allocator_type& alloc = allocator_type())
 			{
-				std::cout << BGREEN << "Vector container constructor called" << NORMAL << std::endl;
+				this->_allocator = alloc;
+				this->_size = 0;
+				this->_capacity = 0;
+				/*NE PAS OUBLIER POINTER VECTOR */
+				std::cout << BGREEN << "Default vector container constructor called" << NORMAL << std::endl;
 				return ;
 			}
-			vector<T>( vector<T> const & copy )
+			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			{
-				std::cout << BCYAN << "Vector container copy constructor called" << NORMAL << std::endl;
-				*this = copy;
+				this->_allocator = alloc;
+				this->_size = n;
+				this->_capacity = n;
+				/*NE PAS OUBLIER POINTER VECTOR */
+				(void)val;
+				std::cout << BGREEN << "Fill vector container constructor called" << NORMAL << std::endl;
 			}
 			~vector<T>( void )
 			{
-				std::cout << BRED << "Vector container destructor called." << NORMAL << std::endl;
+				std::cout << BRED << "vector container destructor called." << NORMAL << std::endl;
 				return ;	
 			}
 			vector<T> & operator=( const vector<T> & rhs )
 			{
-				std::cout << BPURPLE << "Vector container destructor called." << NORMAL << std::endl;
+				std::cout << BPURPLE << "Operator= " << WHITE << "of vector container called called." << NORMAL << std::endl;
 				this->_tab = rhs._tab;
 				return (*this);
 			}
@@ -58,10 +81,13 @@ namespace ft
 				
 			}
 		private:
+			size_type		_size;
+			size_type		_capacity;
+			allocator_type	_allocator;
 			T _tab;
 	};
-
-template<typename T, typename Allocator >
+}
+/*template<typename T, typename Allocator >
 bool operator==( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs )
 {
 	int i;
@@ -88,27 +114,27 @@ bool operator!=( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rh
 	return (lhs == rhs);
 }
 }
-
+*/
 /*template<typename T, typename Allocator >
-bool operator<( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) const
+bool operator<( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) 
 {
 	return ();
 }
 
 template<typename T, typename Allocator >
-bool operator<=( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) const
+bool operator<=( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) 
 {
 	return ();
 }
 
 template<typename T, typename Allocator >
-bool operator>( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) const
+bool operator>( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) 
 {
 	return ();
 }
 
 template<typename T, typename Allocator >
-bool operator>=( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) const
+bool operator>=( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) 
 {
 	return ();
 }

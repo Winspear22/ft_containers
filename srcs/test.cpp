@@ -8,14 +8,16 @@ int main( void )
 
 	ft::vector<std::string> vector2(vector);
 	ft::vector<std::string> vector3 = vector2;
+	//ft::vector<std::string> vector4(5, 0);
 
 	std::cout << "vector == " << vector.GetTab() << std::endl;
 	std::cout << "vector2 == " << vector2.GetTab() << std::endl;
 	std::cout << "vector3 == " << vector3.GetTab() << std::endl;
 
-	ft::vector<A> popo;
 
-	if (vector == vector2)
+//	ft::vector<A> popo;
+
+	/*if (vector == vector2)
 		std::cout << "vector2 == vector" << std::endl;
 	else
 		std::cout << "vector2 != vector" << std::endl;
@@ -28,6 +30,6 @@ int main( void )
 	else
 		std::cout << "vector3 != vector" << std::endl;
 
-
+*/
     return (0);
 }
