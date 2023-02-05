@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/05 21:38:12 by adaloui          ###   ########.fr       */
+/*   Updated: 2023/02/05 21:51:16 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ namespace ft
 	class vector
 	{
 		public:
+		/*==============================================================================*/
+		/*----------------------------STD::ALLOCATOR ALIASES----------------------------*/
+		/*==============================================================================*/
 			typedef T											value_type;
 			typedef Allocator									allocator_type;
 			typedef typename allocator_type::reference			reference;
@@ -35,7 +38,13 @@ namespace ft
 			*/
 			typedef typename allocator_type::difference_type	difference_type;
 			typedef typename allocator_type::size_type			size_type;
-			
+		/*==============================================================================*/
+
+		/*==============================================================================*/
+		/*---------------------------------CONSTRUCTORS---------------------------------*/
+		/*==============================================================================*/
+		
+		/*------------------------------Default constructor-----------------------------*/	
 			explicit vector (const allocator_type& alloc = allocator_type())
 			{
 				this->_allocator = alloc;
@@ -45,6 +54,8 @@ namespace ft
 				std::cout << BGREEN << "Default vector container constructor called" << NORMAL << std::endl;
 				return ;
 			}
+		
+		/*-------------------------------Fill constructor-------------------------------*/
 			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			{
 				this->_allocator = alloc;
@@ -54,11 +65,19 @@ namespace ft
 				(void)val;
 				std::cout << BGREEN << "Fill vector container constructor called" << NORMAL << std::endl;
 			}
+		/*-------------------------------Range constructor------------------------------*/
+		/*-------------------------------Copy constructor-------------------------------*/
+		/*==============================================================================*/
+		
+		/*==============================================================================*/
+		/*----------------------------------DESTRUCTOR----------------------------------*/
+		/*==============================================================================*/
 			~vector<T>( void )
 			{
 				std::cout << BRED << "vector container destructor called." << NORMAL << std::endl;
 				return ;	
 			}
+		/*==============================================================================*/
 			vector<T> & operator=( const vector<T> & rhs )
 			{
 				std::cout << BPURPLE << "Operator= " << WHITE << "of vector container called called." << NORMAL << std::endl;
@@ -72,13 +91,6 @@ namespace ft
 			T 		GetTab( void )
 			{
 				return (this->_tab);
-			}
-			__SIZE_TYPE__ size( void ) const
-			{
-				int i;
-
-				i = 0;
-				
 			}
 		private:
 			size_type		_size;
