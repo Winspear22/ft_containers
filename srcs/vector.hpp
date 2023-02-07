@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/05 23:23:08 by adaloui          ###   ########.fr       */
+/*   Updated: 2023/02/08 00:07:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,84 @@
 
 namespace ft
 {
+	template<bool Cond, class T = void>
+	struct enable_if {};
+	
+	template<class T>
+	struct enable_if<true, T> {typedef T type;};
+	
+	template <class T, T v>
+	struct integral_constant
+	{
+		static const T value = v;
+		typedef T value_type;
+		typedef integral_constant<T, v> type;
+	};
+
+	typedef integral_constant<bool, true> true_type;
+	typedef integral_constant<bool, false> false_type;
+	
+	template <typename> struct is_integral_type :						false_type {};
+	template <> struct is_integral_type<bool> :							true_type {};
+	template <> struct is_integral_type<char> :							true_type {};
+	template <> struct is_integral_type<wchar_t> :						true_type {};
+	template <> struct is_integral_type<signed char> :					true_type {};
+	template <> struct is_integral_type<short int> :					true_type {};
+	template <> struct is_integral_type<int> :							true_type {};
+	template <> struct is_integral_type<long int> :						true_type {};
+	template <> struct is_integral_type<unsigned char> :				true_type {};
+	template <> struct is_integral_type<unsigned short int> :			true_type {};
+	template <> struct is_integral_type<unsigned int> :					true_type {};
+	template <> struct is_integral_type<unsigned long int> :			true_type {};
+	template <> struct is_integral_type<const bool> :					true_type {};
+	template <> struct is_integral_type<const char> :					true_type {};
+	template <> struct is_integral_type<const wchar_t> :				true_type {};
+	template <> struct is_integral_type<const signed char> :			true_type {};
+	template <> struct is_integral_type<const short int> :				true_type {};
+	template <> struct is_integral_type<const int> :					true_type {};
+	template <> struct is_integral_type<const long int> :				true_type {};
+	template <> struct is_integral_type<const unsigned char> :			true_type {};
+	template <> struct is_integral_type<const unsigned short int> :		true_type {};
+	template <> struct is_integral_type<const unsigned int> :			true_type {};
+	template <> struct is_integral_type<const unsigned long int> :		true_type {};
+
+	template <class T> struct is_integral : is_integral_type<T> {};
+	template<typename T>
+	void swap(T &a, T &b)
+	{
+		T c(a);
+		a = b;
+		b = c;
+	}
+	
+	template<class It>
+	typename std::iterator_traits<It>::difference_type 
+    do_distance(It first, It last, std::input_iterator_tag)
+	{
+    	typename std::iterator_traits<It>::difference_type result = 0;
+    	while (first != last) {
+        	++first;
+        	++result;
+    	}
+    	return result;
+	}
+
+	template<class It>
+	typename std::iterator_traits<It>::difference_type 
+    do_distance(It first, It last, std::random_access_iterator_tag)
+	{
+    	return last - first;
+	}
+
+	
+	template<class It>
+	typename std::iterator_traits<It>::difference_type 
+	distance(It first, It last)
+	{
+    	return ft::do_distance(first, last,
+                               typename std::iterator_traits<It>::iterator_category());
+	}
+
 	template<typename T, typename Allocator = std::allocator<T> >
 	class vector
 	{
@@ -87,6 +165,17 @@ namespace ft
 			this->_size = 0;
 			return ;
 		}*/
+		template <class InputIterator> // terminer le constructeur
+        vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+		{
+			this->_allocator = alloc;
+			this->_size = 0;
+			this->_capacity = ft::distance(first, last);
+			if (this->_capacity)
+				this->_element = this->_allocator.allocate(this->_capacity);
+			for (; first != last; first++) 
+				this->_allocator.construct(&this->_element[this->_size++], *first);
+		}
 		/*-------------------------------Copy constructor-------------------------------*/
 		vector ( const vector& x )
 		{
@@ -113,7 +202,7 @@ namespace ft
 		/*==============================================================================*/
 		/*----------------------------------DESTRUCTOR----------------------------------*/
 		/*==============================================================================*/
-			~vector<T>( void )
+			~vector( void )
 			{
 				if (this->_constructor_type == DEFAULT)
 					std::cout << BWHITE << "DEFAULT " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
@@ -147,23 +236,76 @@ namespace ft
 			vector& operator= (const vector& x)
 			{
 				std::cout << BWHITE << "EQUAL " << BPURPLE << "vector "<< BBLACK << "container overloaded operator called" << NORMAL << std::endl;
-				size_type i;
 				this->_allocator = x._allocator;
 				this->_size = x._size;
 				this->_capacity = x._capacity; //je suis pas sur, cela pourrait etre x.size
 				this->_constructor_type = EQUAL;
-				if (this->_size > 0) // PAS SUR D'UTILISER SIZE
-				{
-					i = 0;
-					this->_element = this->_allocator.allocate(this->_size); //pas sur d'utiliser size
-					while (i < this->_size) //pas sur d'utiliser size
-					{
-						this->_allocator.construct(&this->_element[i], x._element[i]);
-						i++;
-					}
-				}
 				return (*this);
 			}
+		
+		/*==============================================================================*/
+		/*------------------------------FONCTIONS MEMBRES-------------------------------*/
+		/*==============================================================================*/
+
+		/*==============================================================================*/
+		/*---------------------------------ITERARTORS-----------------------------------*/
+		/*==============================================================================*/
+		/*------------------------------------BEGIN-------------------------------------*/
+		/*------------------------------------END---------------------------------------*/
+		/*------------------------------------RBEGIN------------------------------------*/
+		/*------------------------------------REND--------------------------------------*/
+		/*------------------------------------CBEGIN------------------------------------*/
+		/*------------------------------------CEND--------------------------------------*/
+		/*------------------------------------CRBEGIN-----------------------------------*/
+		/*------------------------------------CREND-------------------------------------*/
+		/*==============================================================================*/
+
+		/*==============================================================================*/
+		/*----------------------------------CAPACITY------------------------------------*/
+		/*==============================================================================*/
+		/*------------------------------------SIZE--------------------------------------*/
+		size_type size() const
+		{
+			return (this->_size);
+		}
+		/*------------------------------------MAX_SIZE----------------------------------*/
+		size_type max_size() const
+		{
+			return (this->_allocator.max_size());
+		}
+		/*------------------------------------RESIZE------------------------------------*/
+		/*------------------------------------CAPACITY----------------------------------*/
+		size_type capacity() const
+		{
+			return (this->_capacity);
+		}
+		/*------------------------------------EMPTY-------------------------------------*/
+		bool empty() const
+		{
+			if (this->_size == 0)
+				return (SUCCESS); // The container is empty, it returns true
+			return (FAILURE); // The conainter is not empty, it returns fail
+		}
+		/*------------------------------------RESERVE-----------------------------------*/
+		void reserve(size_type n)
+		{
+			std::string msg_error;
+
+			msg_error = "\033[1;31mError. \033[1;37mreserve() \033[1;31mcommand failed. Max size allocation reached.\033[0m";
+			if (n > this->_allocator.max_size())
+				throw std::length_error(msg_error); //Si on met nombre vraiment trop grand, bien au-delà du max, ça ne compilera pas
+			else if (n < this->_capacity)
+				return ;
+			else if (n == this->_capacity)
+				return ;
+
+			return ;
+		}
+		/*------------------------------------SHRINK_TO_FIT-----------------------------*/
+		/*==============================================================================*/
+
+
+		
 		/*==============================================================================*/
 			void	SetTab( T tab )
 			{
