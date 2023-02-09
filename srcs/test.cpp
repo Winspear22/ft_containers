@@ -58,22 +58,20 @@ int main( void )
 	std::cout << "size of signed char === " << std::numeric_limits<signed char>::max() << std::endl;
 	std::cout << "size of short int === " << std::numeric_limits<short int>::max() << std::endl;
 	std::cout << "size of int === " << std::numeric_limits<int>::max() << std::endl;
-	std::cout << "size of long int === " << std::numeric_limits<long int>::max() << std::endl;
-	std::cout << "size of unsigned char=== " << std::numeric_limits<unsigned char>::max() << std::endl;
-	std::cout << "size of unsigned short iont === " << std::numeric_limits<unsigned short int>::max() << std::endl;
-	std::cout << "size of  unsigned int === " << std::numeric_limits<unsigned int>::max() << std::endl;
-	std::cout << "size of unsigned long int === " << std::numeric_limits<unsigned long int>::max() << std::endl;
+	std::cout << "size of bool === " << std::numeric_limits<bool>::max() << std::endl;
+	std::cout << "size of unsigned short int === " << std::numeric_limits<unsigned short int>::max() << std::endl;
 
-	/*try
+
+	try
 	{
 		std::cout << RED << "BOOL" << std::endl;
-		std::vector<bool> boolv2(std::numeric_limits<bool>::max(), 0);
+		std::vector<bool> boolv2(std::numeric_limits<unsigned long int>::max(), 0);
 	}
 	catch(const std::exception& e)
 	{
 		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
 		std::cerr << e.what() << '\n';
-	}*/
+	}
 	try
 	{
 		std::cout << RED << "char" << std::endl;
@@ -84,7 +82,7 @@ int main( void )
 		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
 		std::cerr << e.what() << '\n';
 	}
-	try
+/*	try
 	{
 		std::cout << RED << "wchar_t" << std::endl;
 		std::vector<wchar_t> charv2(std::numeric_limits<wchar_t>::max(), 0);
@@ -93,7 +91,7 @@ int main( void )
 	{
 		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
 		std::cerr << e.what() << '\n';
-	}
+	}*/
 	try
 	{
 		std::cout << RED << "signed char" << std::endl;
@@ -114,7 +112,7 @@ int main( void )
 		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
 		std::cerr << e.what() << '\n';
 	}
-	try
+/*	try
 	{
 		std::cout << RED << "int" << std::endl;
 		std::vector<int> charv2(std::numeric_limits<int>::max(), 0);
@@ -123,7 +121,7 @@ int main( void )
 	{
 		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
 		std::cerr << e.what() << '\n';
-	}
+	}*/
 	try
 	{
 		std::cout << RED << "long int" << std::endl;
@@ -154,7 +152,7 @@ int main( void )
 		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
 		std::cerr << e.what() << '\n';
 	}
-	try
+/*	try
 	{
 		std::cout << RED << "unsigned int" << std::endl;
 		std::vector<unsigned int> charv2(std::numeric_limits<unsigned int>::max(), 0);
@@ -163,7 +161,7 @@ int main( void )
 	{
 		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
 		std::cerr << e.what() << '\n';
-	}
+	}*/
 	try
 	{
 		std::cout << RED << "unsigned long int" << std::endl;
