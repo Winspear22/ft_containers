@@ -4,26 +4,10 @@
 # include <limits>
 
 
-/*int main( void )
+int main(void)
 {
-	try
-	{
-		ft::vector<bool> boolv2((std::numeric_limits<size_t>::max() / sizeof(int)), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		ft::vector<bool> boolv2((std::numeric_limits<size_t>::max() / sizeof(int)), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
+	ft::vector<bool> boolv;
+	ft::vector<bool> boolv2(100, 0);
 	ft::vector<char> charv;
 	ft::vector<char> charv2(100, 0);
 	ft::vector<wchar_t> wchar_tv;
@@ -44,275 +28,186 @@
 	ft::vector<unsigned int> unsigned_intv2(100, 0);
 	ft::vector<unsigned long int> unsigned_long_intv;
 	ft::vector<unsigned long int> unsigned_long_intv2(100, 0);
-	return (0);
-}*/
 
+	boolv.reserve(5000);
+	boolv2.reserve(5000);
+	charv.reserve(5000);
+	charv2.reserve(5000);
+	wchar_tv.reserve(5000);
+	wchar_tv2.reserve(5000);
+	signed_charv.reserve(5000);
+	signed_charv2.reserve(5000);
+	short_intv.reserve(5000);
+	short_intv2.reserve(5000);
+	intv.reserve(5000);
+	intv2.reserve(5000);
+	long_intv.reserve(5000);
+	long_intv2.reserve(5000);
+	unsigned_charv.reserve(5000);
+	unsigned_charv2.reserve(5000);
+	unsigned_short_intv.reserve(5000);
+ 	unsigned_short_intv2.reserve(5000);
+	unsigned_intv.reserve(5000);
+	unsigned_intv2.reserve(5000);
+	unsigned_long_intv.reserve(5000);
+	unsigned_long_intv2.reserve(5000);
+	ft::vector<bool>vv1(boolv2);
+	ft::vector<char>vv2(charv2);
+	ft::vector<wchar_t>vv3(wchar_tv2);
+	ft::vector<signed char>vv4(signed_charv2);
+	ft::vector<short int>vv5(short_intv2);
+	ft::vector<int>vv6(intv2);
+	ft::vector<long int>vv7(long_intv2);
+	ft::vector<unsigned char>vv8(unsigned_charv2);
+	ft::vector<unsigned short int>vv9(unsigned_short_intv2);
+	ft::vector<unsigned int>vv10(unsigned_intv2);
+	ft::vector<unsigned long int>vv11(unsigned_long_intv2);
+
+/*	std::cout << "bool size : " << boolv2.size() << std::endl;
+	std::cout << "bool capacity : " << boolv2.capacity() << std::endl;
+	std::cout << "char size : " << charv2.size() << std::endl;
+	std::cout << "char capacity : " << charv2.capacity() << std::endl;
+	std::cout << "wchar size : " << wchar_tv2.size() << std::endl;
+	std::cout << "wchar capacity : " << wchar_tv2.capacity() << std::endl;
+	std::cout << "signed_char size : " << signed_charv2.size() << std::endl;
+	std::cout << "signed_char capacity : " << signed_charv2.capacity() << std::endl;
+	std::cout << "short int size : " << short_intv2.size() << std::endl;
+	std::cout << "short int capacity : " << short_intv2.capacity() << std::endl;
+	std::cout << "int size : " << intv2.size() << std::endl;
+	std::cout << "int capacity : " << intv2.capacity() << std::endl;
+	std::cout << "long int size : " << long_intv2.size() << std::endl;
+	std::cout << "long int capacity : " << long_intv2.capacity() << std::endl;
+	std::cout << "unsigned char size : " << unsigned_charv2.size() << std::endl;
+	std::cout << "unsigned char capacity : " << unsigned_charv2.capacity() << std::endl;
+	std::cout << "unsigned short int size : " << unsigned_short_intv2.size() << std::endl;
+	std::cout << "unsigned short int capacity : " << unsigned_short_intv2.capacity() << std::endl;
+	std::cout << "unsigned int size : " << unsigned_intv2.size() << std::endl;
+	std::cout << "unsigned int capacity : " << unsigned_intv2.capacity() << std::endl;
+	std::cout << "unsigned long int size : " << unsigned_long_intv2.size() << std::endl;
+	std::cout << "unsigned long int capacity : " << unsigned_long_intv2.capacity() << std::endl;
+	*/
+	std::cout << "bool size : " << vv1.size() << std::endl;
+	std::cout << "bool capacity : " << vv1.capacity() << std::endl;
+	std::cout << "char size : " << vv2.size() << std::endl;
+	std::cout << "char capacity : " << vv2.capacity() << std::endl;
+	std::cout << "wchar size : " << vv3.size() << std::endl;
+	std::cout << "wchar capacity : " << vv3.capacity() << std::endl;
+	std::cout << "signed_char size : " << vv4.size() << std::endl;
+	std::cout << "signed_char capacity : " << vv4.capacity() << std::endl;
+	std::cout << "short int size : " << vv5.size() << std::endl;
+	std::cout << "short int capacity : " << vv5.capacity() << std::endl;
+	std::cout << "int size : " << vv6.size() << std::endl;
+	std::cout << "int capacity : " << vv6.capacity() << std::endl;
+	std::cout << "long int size : " << vv7.size() << std::endl;
+	std::cout << "long int capacity : " << vv7.capacity() << std::endl;
+	std::cout << "unsigned char size : " << vv8.size() << std::endl;
+	std::cout << "unsigned char capacity : " << vv8.capacity() << std::endl;
+	std::cout << "unsigned short int size : " << vv9.size() << std::endl;
+	std::cout << "unsigned short int capacity : " << vv9.capacity() << std::endl;
+	std::cout << "unsigned int size : " << vv10.size() << std::endl;
+	std::cout << "unsigned int capacity : " << vv10.capacity() << std::endl;
+	std::cout << "unsigned long int size : " << vv11.size() << std::endl;
+	std::cout << "unsigned long int capacity : " << vv11.capacity() << std::endl;
+	
+	boolv.shrink_to_fit();
+	boolv2.shrink_to_fit();
+	charv.shrink_to_fit();
+	charv2.shrink_to_fit();
+	wchar_tv.shrink_to_fit();
+	wchar_tv2.shrink_to_fit();
+	signed_charv.shrink_to_fit();
+	signed_charv2.shrink_to_fit();
+	short_intv.shrink_to_fit();
+	short_intv2.shrink_to_fit();
+	intv.shrink_to_fit();
+	intv2.shrink_to_fit();
+	long_intv.shrink_to_fit();
+	long_intv2.shrink_to_fit();
+	unsigned_charv.shrink_to_fit();
+	unsigned_charv2.shrink_to_fit();
+	unsigned_short_intv.shrink_to_fit();
+ 	unsigned_short_intv2.shrink_to_fit();
+	unsigned_intv.shrink_to_fit();
+	unsigned_intv2.shrink_to_fit();
+	unsigned_long_intv.shrink_to_fit();
+	unsigned_long_intv2.shrink_to_fit();
+	vv1.shrink_to_fit();
+	vv2.shrink_to_fit();
+	vv3.shrink_to_fit();
+	vv4.shrink_to_fit();
+	vv5.shrink_to_fit();
+	vv6.shrink_to_fit();
+	vv7.shrink_to_fit();
+	vv8.shrink_to_fit();
+	vv9.shrink_to_fit();
+	vv10.shrink_to_fit();
+	vv11.shrink_to_fit();
+/*	std::cout << "bool size : " << boolv2.size() << std::endl;
+	std::cout << "bool capacity : " << boolv2.capacity() << std::endl;
+	std::cout << "char size : " << charv2.size() << std::endl;
+	std::cout << "char capacity : " << charv2.capacity() << std::endl;
+	std::cout << "wchar size : " << wchar_tv2.size() << std::endl;
+	std::cout << "wchar capacity : " << wchar_tv2.capacity() << std::endl;
+	std::cout << "signed_char size : " << signed_charv2.size() << std::endl;
+	std::cout << "signed_char capacity : " << signed_charv2.capacity() << std::endl;
+	std::cout << "short int size : " << short_intv2.size() << std::endl;
+	std::cout << "short int capacity : " << short_intv2.capacity() << std::endl;
+	std::cout << "int size : " << intv2.size() << std::endl;
+	std::cout << "int capacity : " << intv2.capacity() << std::endl;
+	std::cout << "long int size : " << long_intv2.size() << std::endl;
+	std::cout << "long int capacity : " << long_intv2.capacity() << std::endl;
+	std::cout << "unsigned char size : " << unsigned_charv2.size() << std::endl;
+	std::cout << "unsigned char capacity : " << unsigned_charv2.capacity() << std::endl;
+	std::cout << "unsigned short int size : " << unsigned_short_intv2.size() << std::endl;
+	std::cout << "unsigned short int capacity : " << unsigned_short_intv2.capacity() << std::endl;
+	std::cout << "unsigned int size : " << unsigned_intv2.size() << std::endl;
+	std::cout << "unsigned int capacity : " << unsigned_intv2.capacity() << std::endl;
+	std::cout << "unsigned long int size : " << unsigned_long_intv2.size() << std::endl;
+	std::cout << "unsigned long int capacity : " << unsigned_long_intv2.capacity() << std::endl;
+*/
+	std::cout << "===============" << std::endl;
+	std::cout << "bool size : " << vv1.size() << std::endl;
+	std::cout << "bool capacity : " << vv1.capacity() << std::endl;
+	std::cout << "char size : " << vv2.size() << std::endl;
+	std::cout << "char capacity : " << vv2.capacity() << std::endl;
+	std::cout << "wchar size : " << vv3.size() << std::endl;
+	std::cout << "wchar capacity : " << vv3.capacity() << std::endl;
+	std::cout << "signed_char size : " << vv4.size() << std::endl;
+	std::cout << "signed_char capacity : " << vv4.capacity() << std::endl;
+	std::cout << "short int size : " << vv5.size() << std::endl;
+	std::cout << "short int capacity : " << vv5.capacity() << std::endl;
+	std::cout << "int size : " << vv6.size() << std::endl;
+	std::cout << "int capacity : " << vv6.capacity() << std::endl;
+	std::cout << "long int size : " << vv7.size() << std::endl;
+	std::cout << "long int capacity : " << vv7.capacity() << std::endl;
+	std::cout << "unsigned char size : " << vv8.size() << std::endl;
+	std::cout << "unsigned char capacity : " << vv8.capacity() << std::endl;
+	std::cout << "unsigned short int size : " << vv9.size() << std::endl;
+	std::cout << "unsigned short int capacity : " << vv9.capacity() << std::endl;
+	std::cout << "unsigned int size : " << vv10.size() << std::endl;
+	std::cout << "unsigned int capacity : " << vv10.capacity() << std::endl;
+	std::cout << "unsigned long int size : " << vv11.size() << std::endl;
+	std::cout << "unsigned long int capacity : " << vv11.capacity() << std::endl;
+	return (0);
+}
+/*
 
 int main( void )
 {
+	ft::vector<int> toto(100, 0);
+	std::cout << "toto size : " << toto.size() << std::endl;
+	std::cout << "toto capacity : " << toto.capacity() << std::endl;
+	toto.reserve(1000);
+	std::cout << "toto size : " << toto.size() << std::endl;
+	std::cout << "toto capacity : " << toto.capacity() << std::endl;
+	toto.shrink_to_fit();
+	std::cout << "toto size : " << toto.size() << std::endl;
+	std::cout << "toto capacity : " << toto.capacity() << std::endl;
+
+
 	ft::vector<bool> boolv;
-	std::cout << "size of sizet / int === " << std::numeric_limits<size_t>::max() / sizeof(int) << std::endl;
-	std::cout << "size of sizet === " << std::numeric_limits<size_t>::max() << std::endl;
-	std::cout << "size of char === " << std::numeric_limits<char>::max() << std::endl;
-	std::cout << "size of wchar === " << std::numeric_limits<wchar_t>::max() << std::endl;
-	std::cout << "size of signed char === " << std::numeric_limits<signed char>::max() << std::endl;
-	std::cout << "size of short int === " << std::numeric_limits<short int>::max() << std::endl;
-	std::cout << "size of int === " << std::numeric_limits<int>::max() << std::endl;
-	std::cout << "size of bool === " << std::numeric_limits<bool>::max() << std::endl;
-	std::cout << "size of unsigned short int === " << std::numeric_limits<unsigned short int>::max() << std::endl;
-
-
-	try
-	{
-		std::cout << RED << "BOOL" << std::endl;
-		std::vector<bool> boolv2(std::numeric_limits<unsigned long int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "char" << std::endl;
-		std::vector<char> charv2(std::numeric_limits<char>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-/*	try
-	{
-		std::cout << RED << "wchar_t" << std::endl;
-		std::vector<wchar_t> charv2(std::numeric_limits<wchar_t>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}*/
-	try
-	{
-		std::cout << RED << "signed char" << std::endl;
-		std::vector<signed char> charv2(std::numeric_limits<signed char>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "short int" << std::endl;
-		std::vector<short int> charv2(std::numeric_limits<short int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-/*	try
-	{
-		std::cout << RED << "int" << std::endl;
-		std::vector<int> charv2(std::numeric_limits<int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}*/
-	try
-	{
-		std::cout << RED << "long int" << std::endl;
-		std::vector<long int> charv2(std::numeric_limits<long int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "unsigned char" << std::endl;
-		std::vector<unsigned char> charv2(std::numeric_limits<unsigned char>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "unsigned short int" << std::endl;
-		std::vector<unsigned short int> charv2(std::numeric_limits<unsigned short int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-/*	try
-	{
-		std::cout << RED << "unsigned int" << std::endl;
-		std::vector<unsigned int> charv2(std::numeric_limits<unsigned int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}*/
-	try
-	{
-		std::cout << RED << "unsigned long int" << std::endl;
-		std::vector<unsigned long int> charv2(std::numeric_limits<unsigned long int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "size_t" << std::endl;
-		std::vector<size_t> charv2(std::numeric_limits<size_t>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	std::cout << " =================================== " << std::endl;
-	std::cout << " =================================== " << std::endl;
-	std::cout << " =================================== " << std::endl;
-	std::cout << " =================================== " << std::endl;
-	std::cout << " =================================== " << std::endl;
-
-
-	/*MINE*/
-	try
-	{
-		std::cout << RED << "BOOL" << std::endl;
-		ft::vector<bool> boolv2((std::numeric_limits<bool>::max()), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "char" << std::endl;
-		ft::vector<char> charv2(std::numeric_limits<char>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "wchar_t" << std::endl;
-		ft::vector<wchar_t> charv2(std::numeric_limits<wchar_t>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "signed char" << std::endl;
-		ft::vector<signed char> charv2(std::numeric_limits<signed char>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "short int" << std::endl;
-		ft::vector<short int> charv2(std::numeric_limits<short int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "int" << std::endl;
-		ft::vector<int> charv2(std::numeric_limits<int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "long int" << std::endl;
-		ft::vector<long int> charv2(std::numeric_limits<long int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "unsigned char" << std::endl;
-		ft::vector<unsigned char> charv2(std::numeric_limits<unsigned char>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "unsigned short int" << std::endl;
-		ft::vector<unsigned short int> charv2(std::numeric_limits<unsigned short int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "unsigned int" << std::endl;
-		ft::vector<unsigned int> charv2(std::numeric_limits<unsigned int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "unsigned long int" << std::endl;
-		ft::vector<unsigned long int> charv2(std::numeric_limits<unsigned long int>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		std::cout << RED << "size_t" << std::endl;
-		ft::vector<size_t> charv2(std::numeric_limits<size_t>::max(), 0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << CYAN << "ERRRRRROOOOR" << NORMAL << std::endl;
-		std::cerr << e.what() << '\n';
-	}
-
-
-	/*ft::vector<char> charv;
+	ft::vector<bool> boolv2(100, 0);
+	ft::vector<char> charv;
 	ft::vector<char> charv2(100, 0);
 	ft::vector<wchar_t> wchar_tv;
 	ft::vector<wchar_t> wchar_tv2(100, 0);
@@ -473,6 +368,72 @@ int main( void )
 	unsigned_intv2.reserve(5000);
 	unsigned_long_intv.reserve(5000);
 	unsigned_long_intv2.reserve(5000);
+	std::cout << "bool size : " << boolv.size() << std::endl;
+	std::cout << "bool capacity : " << boolv.capacity() << std::endl;
+	std::cout << "char size : " << charv.size() << std::endl;
+	std::cout << "char capacity : " << charv.capacity() << std::endl;
+	std::cout << "wchar size : " << wchar_tv.size() << std::endl;
+	std::cout << "wchar capacity : " << wchar_tv.capacity() << std::endl;
+	std::cout << "signed_char size : " << signed_charv.size() << std::endl;
+	std::cout << "signed_char capacity : " << signed_charv.capacity() << std::endl;
+	std::cout << "short int size : " << short_intv.size() << std::endl;
+	std::cout << "short int capacity : " << short_intv.capacity() << std::endl;
+	std::cout << "int size : " << intv.size() << std::endl;
+	std::cout << "int capacity : " << intv.capacity() << std::endl;
+	std::cout << "long int size : " << long_intv.size() << std::endl;
+	std::cout << "long int capacity : " << long_intv.capacity() << std::endl;
+	std::cout << "unsigned char size : " << unsigned_charv.size() << std::endl;
+	std::cout << "unsigned char capacity : " << unsigned_charv.capacity() << std::endl;
+	std::cout << "unsigned short int size : " << unsigned_short_intv.size() << std::endl;
+	std::cout << "unsigned short int capacity : " << unsigned_short_intv.capacity() << std::endl;
+	std::cout << "unsigned int size : " << unsigned_intv.size() << std::endl;
+	std::cout << "unsigned int capacity : " << unsigned_intv.capacity() << std::endl;
+	std::cout << "unsigned long int size : " << unsigned_long_intv.size() << std::endl;
+	std::cout << "unsigned long int capacity : " << unsigned_long_intv.capacity() << std::endl;
+	boolv.shrink_to_fit();
+	//boolv2.shrink_to_fit();
+	charv.shrink_to_fit();
+	charv2.shrink_to_fit();
+	wchar_tv.shrink_to_fit();
+	wchar_tv2.shrink_to_fit();
+	signed_charv.shrink_to_fit();
+	signed_charv2.shrink_to_fit();
+	short_intv.shrink_to_fit();
+	short_intv2.shrink_to_fit();
+	intv.shrink_to_fit();
+	intv2.shrink_to_fit();
+	long_intv.shrink_to_fit();
+	long_intv2.shrink_to_fit();
+	unsigned_charv.shrink_to_fit();
+	unsigned_charv2.shrink_to_fit();
+	unsigned_short_intv.shrink_to_fit();
+ 	unsigned_short_intv2.shrink_to_fit();
+	unsigned_intv.shrink_to_fit();
+	unsigned_intv2.shrink_to_fit();
+	unsigned_long_intv.shrink_to_fit();
+	unsigned_long_intv2.shrink_to_fit();
+	std::cout << "bool size : " << boolv.size() << std::endl;
+	std::cout << "bool capacity : " << boolv.capacity() << std::endl;
+	std::cout << "char size : " << charv.size() << std::endl;
+	std::cout << "char capacity : " << charv.capacity() << std::endl;
+	std::cout << "wchar size : " << wchar_tv.size() << std::endl;
+	std::cout << "wchar capacity : " << wchar_tv.capacity() << std::endl;
+	std::cout << "signed_char size : " << signed_charv.size() << std::endl;
+	std::cout << "signed_char capacity : " << signed_charv.capacity() << std::endl;
+	std::cout << "short int size : " << short_intv.size() << std::endl;
+	std::cout << "short int capacity : " << short_intv.capacity() << std::endl;
+	std::cout << "int size : " << intv.size() << std::endl;
+	std::cout << "int capacity : " << intv.capacity() << std::endl;
+	std::cout << "long int size : " << long_intv.size() << std::endl;
+	std::cout << "long int capacity : " << long_intv.capacity() << std::endl;
+	std::cout << "unsigned char size : " << unsigned_charv.size() << std::endl;
+	std::cout << "unsigned char capacity : " << unsigned_charv.capacity() << std::endl;
+	std::cout << "unsigned short int size : " << unsigned_short_intv.size() << std::endl;
+	std::cout << "unsigned short int capacity : " << unsigned_short_intv.capacity() << std::endl;
+	std::cout << "unsigned int size : " << unsigned_intv.size() << std::endl;
+	std::cout << "unsigned int capacity : " << unsigned_intv.capacity() << std::endl;
+	std::cout << "unsigned long int size : " << unsigned_long_intv.size() << std::endl;
+	std::cout << "unsigned long int capacity : " << unsigned_long_intv.capacity() << std::endl;
 	try
 	{
 		intv.reserve(4611686018427387904);
@@ -606,178 +567,7 @@ int main( void )
 	std::cout << "\33[1;37munsigned_long_intv \033[1;34msize : \033[1;37m " << unsigned_long_intv2.size() << NORMAL << std::endl;
 	std::cout << "\33[1;37munsigned_long_intv \033[1;35mcapacity \033[1;37m: " << unsigned_long_intv2.capacity() << NORMAL << std::endl;
 	std::cout << std::endl;
-*/
-   return (0);
-}
-
-/*int main( void )
-{
-	ft::vector<const bool> const_boolv;
-	ft::vector<const bool> const_boolv2(100, 0);
-	ft::vector<const char> const_charv;
-	ft::vector<const char> const_charv2(100, 0);
-	ft::vector<const wchar_t> const_wchar_tv;
-	ft::vector<const wchar_t> const_wchar_tv2(100, 0);
-	ft::vector<const signed char> const_signed_charv;
-	ft::vector<const signed char> const_signed_charv2(100, 0);
-	ft::vector<const short int> const_short_intv;
-	ft::vector<const short int> const_short_intv2(100, 0);
-	ft::vector<const int> const_intv;
-	ft::vector<const int> const_intv2(100, 0);
-	ft::vector<const long int> const_long_intv;
-	ft::vector<const long int> const_long_intv2(100, 0);
-	ft::vector<const unsigned char> const_unsigned_charv;
-	ft::vector<const unsigned char> const_unsigned_charv2(100, 0);
-	ft::vector<const unsigned short int> const_unsigned_short_intv;
-	ft::vector<const unsigned short int> const_unsigned_short_intv2(100, 0);
-	ft::vector<const unsigned int> const_unsigned_intv;
-	ft::vector<const unsigned int> const_unsigned_intv2(100, 0);
-	ft::vector<const unsigned long int> const_unsigned_long_intv;
-	ft::vector<const unsigned long int> const_unsigned_long_intv2(100, 0);
-
-std::cout << BRED << "=============================================" << NORMAL << std::endl;
-	std::cout << BYELLOW << "      NORMAL CONSTRUCTOR RESERVE TEST" << NORMAL << std::endl;
-	std::cout << BRED << "=============================================" << NORMAL << std::endl;
-	
-	std::cout << GREEN << "BOOL" << NORMAL << std::endl;
-	std::cout << "\33[1;37mboolv \033[1;34msize : \033[1;37m " << const_boolv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mboolv \033[1;35mcapacity \033[1;37m: " << const_boolv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-
-	std::cout << GREEN << "CHAR" << NORMAL << std::endl;
-	std::cout << "\33[1;37mcharv \033[1;34msize : \033[1;37m " << const_charv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mcharv \033[1;35mcapacity \033[1;37m: " << const_charv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "WCHAR" << NORMAL << std::endl;
-	std::cout << "\33[1;37mwcharv \033[1;34msize : \033[1;37m " << const_wchar_tv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mwcharv \033[1;35mcapacity \033[1;37m: " << const_wchar_tv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "SIGNED CHAR" << NORMAL << std::endl;
-	std::cout << "\33[1;37msigned charv \033[1;34msize : \033[1;37m " << const_signed_charv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37msigned charv \033[1;35mcapacity \033[1;37m: " << const_signed_charv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "SHORT INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37mshort_intv \033[1;34msize : \033[1;37m " << const_short_intv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mshort_intv \033[1;35mcapacity \033[1;37m: " << const_short_intv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37mintv \033[1;34msize : \033[1;37m " << const_intv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mintv \033[1;35mcapacity \033[1;37m: " << const_intv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "LONG INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37mlong_intv \033[1;34msize : \033[1;37m " << const_long_intv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mlong_intv \033[1;35mcapacity \033[1;37m: " << const_long_intv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-
-	std::cout << GREEN << "UNSIGNED CHAR" << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_charv \033[1;34msize : \033[1;37m " << const_unsigned_charv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_charv \033[1;35mcapacity \033[1;37m: " << const_unsigned_charv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "UNSIGNED SHORT INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_short_intv \033[1;34msize : \033[1;37m " << const_unsigned_short_intv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_short_intv \033[1;35mcapacity \033[1;37m: " << const_unsigned_short_intv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "UNSIGNED INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_intv \033[1;34msize : \033[1;37m " << const_unsigned_intv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_intv \033[1;35mcapacity \033[1;37m: " << const_unsigned_intv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "UNSIGNED LONG INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_long_intv \033[1;34msize : \033[1;37m " << const_unsigned_long_intv.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_long_intv \033[1;35mcapacity \033[1;37m: " << const_unsigned_long_intv.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-
-	std::cout << BRED << "=============================================" << NORMAL << std::endl;
-	std::cout << BYELLOW << "        FILL CONSTRUCTOR RESERVE TEST" << NORMAL << std::endl;
-	std::cout << BRED << "=============================================" << NORMAL << std::endl;
-
-	std::cout << GREEN << "BOOL" << NORMAL << std::endl;
-	std::cout << "\33[1;37mboolv \033[1;34msize : \033[1;37m " << const_boolv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mboolv \033[1;35mcapacity \033[1;37m: " << const_boolv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-
-	std::cout << GREEN << "CHAR" << NORMAL << std::endl;
-	std::cout << "\33[1;37mcharv \033[1;34msize : \033[1;37m " << const_charv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mcharv \033[1;35mcapacity \033[1;37m: " << const_charv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "WCHAR" << NORMAL << std::endl;
-	std::cout << "\33[1;37mwcharv \033[1;34msize : \033[1;37m " << const_wchar_tv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mwcharv \033[1;35mcapacity \033[1;37m: " << const_wchar_tv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "SIGNED CHAR" << NORMAL << std::endl;
-	std::cout << "\33[1;37msigned charv \033[1;34msize : \033[1;37m " << const_signed_charv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37msigned charv \033[1;35mcapacity \033[1;37m: " << const_signed_charv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "SHORT INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37mshort_intv \033[1;34msize : \033[1;37m " << const_short_intv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mshort_intv \033[1;35mcapacity \033[1;37m: " << const_short_intv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37mintv \033[1;34msize : \033[1;37m " << const_intv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mintv \033[1;35mcapacity \033[1;37m: " << const_intv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "LONG INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37mlong_intv \033[1;34msize : \033[1;37m " << const_long_intv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37mlong_intv \033[1;35mcapacity \033[1;37m: " << const_long_intv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-
-	std::cout << GREEN << "UNSIGNED CHAR" << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_charv \033[1;34msize : \033[1;37m " << const_unsigned_charv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_charv \033[1;35mcapacity \033[1;37m: " << const_unsigned_charv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "UNSIGNED SHORT INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_short_intv \033[1;34msize : \033[1;37m " << const_unsigned_short_intv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_short_intv \033[1;35mcapacity \033[1;37m: " << const_unsigned_short_intv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "UNSIGNED INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_intv \033[1;34msize : \033[1;37m " << const_unsigned_intv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_intv \033[1;35mcapacity \033[1;37m: " << const_unsigned_intv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << GREEN << "UNSIGNED LONG INT" << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_long_intv \033[1;34msize : \033[1;37m " << const_unsigned_long_intv2.size() << NORMAL << std::endl;
-	std::cout << "\33[1;37munsigned_long_intv \033[1;35mcapacity \033[1;37m: " << const_unsigned_long_intv2.capacity() << NORMAL << std::endl;
-	std::cout << std::endl;
-
-
-	const_intv.reserve(100);
-	const_intv2.reserve(10000);
-
-	try
-	{
-		const_intv.reserve(4611686018427387904);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	try
-	{
-		const_intv.reserve(-1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	std::cout << "intv \033[1;35mcapacity \033[1;37m: " << const_intv.capacity() << std::endl;
-	std::cout << "intv \033[1;34msize : \033[1;37m " << const_intv.size() << std::endl;
-
-	std::cout << "intv2 \033[1;35mcapacity \033[1;37m: " << const_intv2.capacity() << std::endl;
-	std::cout << "intv2 \033[1;34msize : \033[1;37m " << const_intv2.size() << std::endl;
 
 	return (0);
-}*/
+}
+*/

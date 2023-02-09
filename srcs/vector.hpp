@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/09 23:43:01 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/10 00:35:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,20 +139,18 @@ namespace ft
 			{
 				std::cout << BWHITE << "FILL " << BPURPLE << "vector "<< BCYAN << "container constructor called" << NORMAL << std::endl;
 				size_type i;
+				size_type max_size;
 				this->_element = NULL;
 				this->_allocator = alloc;
 				this->_size = n;
 				this->_capacity = n;
 				this->_constructor_type = FILL;
 
-				size_type max_size = std::numeric_limits<int>::max();
-				if (this->_capacity > 0) // PAS SUR D'UTILISER SIZE
+				max_size = std::numeric_limits<int>::max();
+				if (this->_capacity > 0)
 				{
 					i = 0;
-			//		std::cout << BBLUE << "n ==== " << BWHITE << n << NORMAL << std::endl;
-			//		std::cout << BBLUE << "max ==== " << BWHITE << max_size << NORMAL << std::endl;
-
-					if (n >= max_size)
+					if (n >= max_size) // nécessité de gérer le throw avant le allocate car valgrind ne laisse pas le temps d'aller au throw avant de crash
 						throw std::bad_alloc();
 					else
 					{
@@ -162,27 +160,20 @@ namespace ft
 							this->_allocator.construct(&this->_element[i], val);
 							i++;
 						}	
-					}
-
-					
+					}		
 				}
 				return ;
 			}
 	
 		/*-------------------------------Range constructor------------------------------*/
-		/*template <class InputIterator>
-		vector( InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type() )
-		{
-			this->_allocator = alloc;
-			this->_size = 0;
-			return ;
-		}*/
 		template <class InputIterator> // terminer le constructeur
         vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
 		{
 			this->_allocator = alloc;
 			this->_size = 0;
 			this->_capacity = ft::distance(first, last);
+			/*NE PAS OUBLIER DE PROTEGER LE ALLOCATE ET DE TOUT METTRE EN WHILE*/
+			
 			if (this->_capacity)
 				this->_element = this->_allocator.allocate(this->_capacity);
 			for (; first != last; first++) 
@@ -197,10 +188,10 @@ namespace ft
 			this->_size = x._size;
 			this->_capacity = x._capacity; //je suis pas sur, cela pourrait etre x.size
 			this->_constructor_type = COPY;
-			if (this->_size > 0) // PAS SUR D'UTILISER SIZE
+			if (this->_capacity > 0) // PAS SUR D'UTILISER SIZE
 			{
 				i = 0;
-				this->_element = this->_allocator.allocate(this->_size); //pas sur d'utiliser size
+				this->_element = this->_allocator.allocate(this->_capacity); //pas sur d'utiliser size
 				while (i < this->_size) //pas sur d'utiliser size
 				{
 					this->_allocator.construct(&this->_element[i], x._element[i]);
@@ -333,6 +324,23 @@ namespace ft
 			return ;
 		}
 		/*------------------------------------SHRINK_TO_FIT-----------------------------*/
+		void shrink_to_fit()
+		{
+			size_type 		i;
+
+			if (this->_capacity > this->_size)
+			{
+				i = 0;
+				while (i < this->_size)
+					i++;
+				while (i < this->_capacity)
+				{
+					this->_allocator.destroy(&this->_element[i]);
+					i++;
+				}
+				this->_capacity = this->_size;
+			}
+		}
 		/*==============================================================================*/
 
 
