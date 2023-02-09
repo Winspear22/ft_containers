@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/08 00:07:32 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/09 21:46:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,15 +144,27 @@ namespace ft
 				this->_size = n;
 				this->_capacity = n;
 				this->_constructor_type = FILL;
-				if (this->_size > 0) // PAS SUR D'UTILISER SIZE
+
+				size_type max_size = std::numeric_limits<value_type>::max();
+				if (this->_capacity > 0) // PAS SUR D'UTILISER SIZE
 				{
 					i = 0;
-					this->_element = this->_allocator.allocate(n);
-					while (i < n)
+					std::cout << BBLUE << "n ==== " << BWHITE << n << NORMAL << std::endl;
+					std::cout << BBLUE << "max ==== " << BWHITE << max_size << NORMAL << std::endl;
+
+					if (n >= max_size)
+						throw std::bad_alloc();
+					else
 					{
-						this->_allocator.construct(&this->_element[i], val);
-						i++;
+						this->_element = this->_allocator.allocate(n);
+						while (i < n)
+						{
+							this->_allocator.construct(&this->_element[i], val);
+							i++;
+						}	
 					}
+
+					
 				}
 				return ;
 			}
@@ -215,10 +227,10 @@ namespace ft
 				else if (this->_constructor_type == EQUAL)
 					std::cout << BWHITE << "EQUAL " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
 				size_type i;
-				if (this->_size > 0) // PAS SUR D'UTILISER SIZE
+				if (this->_capacity > 0) // PAS SUR D'UTILISER SIZE
 				{
 					i = 0;
-					while (i < this->_size) //PAS SUR D'UTILISER SIZE
+					while (i < this->_capacity) //PAS SUR D'UTILISER SIZE
 					{
 						this->_allocator.destroy(&this->_element[i]);
 						i++;
@@ -289,16 +301,35 @@ namespace ft
 		/*------------------------------------RESERVE-----------------------------------*/
 		void reserve(size_type n)
 		{
-			std::string msg_error;
+			std::string		msg_error;
+			vector			tmp;
+			size_type 		i;
 
 			msg_error = "\033[1;31mError. \033[1;37mreserve() \033[1;31mcommand failed. Max size allocation reached.\033[0m";
-			if (n > this->_allocator.max_size())
-				throw std::length_error(msg_error); //Si on met nombre vraiment trop grand, bien au-delà du max, ça ne compilera pas
-			else if (n < this->_capacity)
+			if (n < this->_capacity)
 				return ;
 			else if (n == this->_capacity)
 				return ;
-
+			else if (n > this->_allocator.max_size())
+				throw std::length_error(msg_error); //Si on met nombre vraiment trop grand, bien au-delà du max, ça ne compilera pas
+			else
+			{
+				i = 0;
+				tmp._element = this->_element;
+				if (this->_capacity > 0)
+				{
+					i = 0;					
+					while (i < this->_capacity)
+					{
+						
+						this->_allocator.construct(&tmp._element[i], n);
+						this->_allocator.destroy(&this->_element[i]);
+						i++;
+					}
+				}
+				this->_element = tmp._element;			
+				this->_capacity = n;
+			}
 			return ;
 		}
 		/*------------------------------------SHRINK_TO_FIT-----------------------------*/
@@ -307,21 +338,12 @@ namespace ft
 
 		
 		/*==============================================================================*/
-			void	SetTab( T tab )
-			{
-				this->_tab = tab;
-			}
-			T 		GetTab( void )
-			{
-				return (this->_tab);
-			}
 		private:
 			size_type		_size;
 			size_type		_capacity;
 			allocator_type	_allocator;
 			pointer			_element;
 			int				_constructor_type;
-			T _tab;
 	};
 }
 /*template<typename T, typename Allocator >
