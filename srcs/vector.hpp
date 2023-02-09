@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/09 21:46:37 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/09 21:55:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,8 @@ namespace ft
 				if (this->_capacity > 0) // PAS SUR D'UTILISER SIZE
 				{
 					i = 0;
-					std::cout << BBLUE << "n ==== " << BWHITE << n << NORMAL << std::endl;
-					std::cout << BBLUE << "max ==== " << BWHITE << max_size << NORMAL << std::endl;
+			//		std::cout << BBLUE << "n ==== " << BWHITE << n << NORMAL << std::endl;
+			//		std::cout << BBLUE << "max ==== " << BWHITE << max_size << NORMAL << std::endl;
 
 					if (n >= max_size)
 						throw std::bad_alloc();
