@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/10 00:35:14 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/10 01:15:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,6 +277,42 @@ namespace ft
 			return (this->_allocator.max_size());
 		}
 		/*------------------------------------RESIZE------------------------------------*/
+		void resize(size_type n, value_type val = value_type())
+		{
+			size_type i;
+			size_type max_size;
+
+			i = 0;
+			max_size = std::numeric_limits<int>::max();
+			if (n < this->_size)
+			{
+				while (i < this->_size)
+				{
+					this->_allocator.destroy(&this->_element[i]);
+					i++;
+				}
+				this->_size = n;
+			}
+			else if (n == this->_size)
+				return ;
+			else if (n > this->_size)
+			{
+				
+				if (n >= max_size)
+					throw std::bad_alloc();
+				else
+				{
+					this->reserve(n);
+					while (i < this->_size)
+					{
+						this->_allocator.construct(&this->_element[i], val);
+						i++;
+					}
+					this->_size = n;
+				}
+			}
+			return ;
+		}
 		/*------------------------------------CAPACITY----------------------------------*/
 		size_type capacity() const
 		{
@@ -339,6 +375,7 @@ namespace ft
 					i++;
 				}
 				this->_capacity = this->_size;
+				return ;
 			}
 		}
 		/*==============================================================================*/
