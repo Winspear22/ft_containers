@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 21:06:50 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/11 12:44:23 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/11 15:16:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # include "iterator.hpp"
 # include "random_access_iterator.hpp"
 # include "iterator_traits.hpp"
+# include "random_access_iterator_tag.hpp"
+# include "swap.hpp"
+//# include "relational_operators.hpp"
 /*====================================================*/
 
 /*====================================================*/

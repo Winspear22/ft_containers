@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/11 12:45:09 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/11 15:16:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,57 +18,7 @@
 class random_access_iterator;
 
 namespace ft
-{
-	template<bool Cond, class T = void>
-	struct enable_if {};
-	
-	template<class T>
-	struct enable_if<true, T> {typedef T type;};
-	
-	template <class T, T v>
-	struct integral_constant
-	{
-		static const T value = v;
-		typedef T value_type;
-		typedef integral_constant<T, v> type;
-	};
-
-	typedef integral_constant<bool, true> true_type;
-	typedef integral_constant<bool, false> false_type;
-	
-	template <typename> struct is_integral_type :						false_type {};
-	template <> struct is_integral_type<bool> :							true_type {};
-	template <> struct is_integral_type<char> :							true_type {};
-	template <> struct is_integral_type<wchar_t> :						true_type {};
-	template <> struct is_integral_type<signed char> :					true_type {};
-	template <> struct is_integral_type<short int> :					true_type {};
-	template <> struct is_integral_type<int> :							true_type {};
-	template <> struct is_integral_type<long int> :						true_type {};
-	template <> struct is_integral_type<unsigned char> :				true_type {};
-	template <> struct is_integral_type<unsigned short int> :			true_type {};
-	template <> struct is_integral_type<unsigned int> :					true_type {};
-	template <> struct is_integral_type<unsigned long int> :			true_type {};
-	template <> struct is_integral_type<const bool> :					true_type {};
-	template <> struct is_integral_type<const char> :					true_type {};
-	template <> struct is_integral_type<const wchar_t> :				true_type {};
-	template <> struct is_integral_type<const signed char> :			true_type {};
-	template <> struct is_integral_type<const short int> :				true_type {};
-	template <> struct is_integral_type<const int> :					true_type {};
-	template <> struct is_integral_type<const long int> :				true_type {};
-	template <> struct is_integral_type<const unsigned char> :			true_type {};
-	template <> struct is_integral_type<const unsigned short int> :		true_type {};
-	template <> struct is_integral_type<const unsigned int> :			true_type {};
-	template <> struct is_integral_type<const unsigned long int> :		true_type {};
-
-	template <class T> struct is_integral : is_integral_type<T> {};
-	template<typename T>
-	void swap(T &a, T &b)
-	{
-		T c(a);
-		a = b;
-		b = c;
-	}
-	
+{	
 	template<class Iter>
 	typename ft::iterator_traits<Iter>::difference_type 
     do_distance(Iter first, Iter last, std::input_iterator_tag)
@@ -395,59 +345,55 @@ namespace ft
 			pointer			_element;
 			int				_constructor_type;
 	};
-
-
-template<typename T, typename Allocator > 
-bool operator==( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
-{
-	int i;
-
-	i = 0;
-	if (lhs.size() == rhs.size())
+/*template<typename T, typename Allocator > 
+	bool operator==( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
 	{
-		while (i < lhs.size())
+		int i;
+
+		i = 0;
+		if (lhs.size() == rhs.size())
 		{
-			if (lhs[i] != rhs[i])
-				return (FAILURE);
-			i++;
+			while (i < lhs.size())
+			{
+				if (lhs[i] != rhs[i])
+					return (FAILURE);
+				i++;
+			}
 		}
+		else
+			return (FAILURE);
+		return (SUCCESS);
 	}
-	else
-		return (FAILURE);
-	return (SUCCESS);
-		
-}
 
-template<typename T, typename Allocator >
-bool operator!=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
-{
-	return (!(rhs == lhs));
-}
+	template<typename T, typename Allocator >
+	bool operator!=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
+	{
+		return (!(rhs == lhs));
+	}
 
-template<typename T, typename Allocator >
-bool operator<( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
-{
-	return (lhs < rhs);
-}
+	template<typename T, typename Allocator >
+	bool operator<( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+	{
+		return (lhs < rhs);
+	}
 
-template<typename T, typename Allocator >
-bool operator<=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
-{
-	return (!(lhs < rhs));
-}
+	template<typename T, typename Allocator >
+	bool operator<=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+	{
+		return (!(lhs < rhs));
+	}
 
-template<typename T, typename Allocator >
-bool operator>( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
-{
-	return (lhs > rhs);
-}
+	template<typename T, typename Allocator >
+	bool operator>( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+	{
+		return (lhs > rhs);
+	}
 
-template<typename T, typename Allocator >
-bool operator>=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
-{
-	return (!(lhs > rhs));
-}
-
+	template<typename T, typename Allocator >
+	bool operator>=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+	{
+		return (!(lhs > rhs));
+	}*/
 }
 
 /*---------------------CLASSE TEST----------------------*/
