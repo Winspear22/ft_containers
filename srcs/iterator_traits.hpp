@@ -1,5 +1,5 @@
-#ifndef ITERATOR_TRAITS_TPP
-# define ITERATOR_TRAITS_TPP
+#ifndef ITERATOR_TRAITS_HPP
+# define ITERATOR_TRAITS_HPP
 
 # include "utils.hpp"
 

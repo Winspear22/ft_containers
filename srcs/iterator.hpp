@@ -1,8 +1,8 @@
-#ifndef VECTOR_ITERATOR_TPP
-# define VECTOR_ITERATOR_TPP
+#ifndef VECTOR_ITERATOR_HPP
+# define VECTOR_ITERATOR_HPP
 
 # include "utils.hpp"
-# include "vector.tpp"
+# include "vector.hpp"
 
 class vector;
 

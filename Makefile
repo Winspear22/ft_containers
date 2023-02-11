@@ -2,7 +2,7 @@ NAME = ft_containers
 NAME_T = container_test
 
 SRCS = srcs/main.cpp
-SRCS_T = srcs/test.cpp 
+SRCS_T = srcs/test.cpp
 
 INCLUDE= srcs/utils.hpp
 
@@ -16,18 +16,18 @@ CC= c++
 FLAGS= -Wall -Wextra -Werror -std=c++98 -g3
 
 %.o:				%.cpp
-	@$(CC) $(FLAGS) -MMD -c $< -o $@ -I $(INCLUDE)
+	$(CC) $(FLAGS) -MMD -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "Compilation du programme $(NAME)"
+	echo "Compilation du programme $(NAME)"
 	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 
 test: $(NAME_T)
 
 $(NAME_T): $(OBJS_T)
-	@echo "Compilation du programme $(NAME_T)"
+	echo "Compilation du programme $(NAME_T)"
 	$(CC) $(FLAGS) $(OBJS_T) -o $(NAME_T)
 
 clean:

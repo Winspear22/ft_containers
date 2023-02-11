@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 21:06:50 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/11 11:19:08 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/11 12:44:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 # include <limits>
 # include <cstddef>
 
-# include "iterator.tpp"
-# include "random_access_iterator.tpp"
-# include "iterator_traits.tpp"
+# include "iterator.hpp"
+# include "random_access_iterator.hpp"
+# include "iterator_traits.hpp"
 /*====================================================*/
 
 /*====================================================*/
