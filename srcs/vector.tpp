@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.hpp                                         :+:      :+:    :+:   */
+/*   vector.tpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/10 01:15:45 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/11 10:57:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_HPP
-# define VECTOR_HPP
+#ifndef VECTOR_TPP
+# define VECTOR_TPP
 
 # include "utils.hpp"
+# include "iterator_traits.tpp"
+
+class random_access_iterator;
 
 namespace ft
 {
@@ -67,11 +70,11 @@ namespace ft
 		b = c;
 	}
 	
-	template<class It>
-	typename std::iterator_traits<It>::difference_type 
-    do_distance(It first, It last, std::input_iterator_tag)
+	template<class Iter>
+	typename ft::iterator_traits<Iter>::difference_type 
+    do_distance(Iter first, Iter last, std::input_iterator_tag)
 	{
-    	typename std::iterator_traits<It>::difference_type result = 0;
+    	typename ft::iterator_traits<It>::difference_type result = 0;
     	while (first != last) {
         	++first;
         	++result;
@@ -79,20 +82,20 @@ namespace ft
     	return result;
 	}
 
-	template<class It>
-	typename std::iterator_traits<It>::difference_type 
-    do_distance(It first, It last, std::random_access_iterator_tag)
+	template<class Iter>
+	typename ft::iterator_traits<Iter>::difference_type 
+    do_distance(Iter first, Iter last, std::random_access_iterator_tag)
 	{
     	return last - first;
 	}
 
 	
-	template<class It>
-	typename std::iterator_traits<It>::difference_type 
-	distance(It first, It last)
+	template<class Iter>
+	typename ft::iterator_traits<Iter>::difference_type 
+	distance(Iter first, Iter last)
 	{
     	return ft::do_distance(first, last,
-                               typename std::iterator_traits<It>::iterator_category());
+                               typename ft::iterator_traits<Iter>::iterator_category());
 	}
 
 	template<typename T, typename Allocator = std::allocator<T> >
@@ -174,10 +177,13 @@ namespace ft
 			this->_capacity = ft::distance(first, last);
 			/*NE PAS OUBLIER DE PROTEGER LE ALLOCATE ET DE TOUT METTRE EN WHILE*/
 			
-			if (this->_capacity)
+			if (this->_capacity > 0) // le conteneur  a déjà été protégé car on ne peut pas créer un conteneur plus grand que la limite, donc pas besoin de protéger le allocate
 				this->_element = this->_allocator.allocate(this->_capacity);
-			for (; first != last; first++) 
+			while (first != last)
+			{
 				this->_allocator.construct(&this->_element[this->_size++], *first);
+				first++;
+			}
 		}
 		/*-------------------------------Copy constructor-------------------------------*/
 		vector ( const vector& x )
@@ -281,7 +287,7 @@ namespace ft
 		{
 			size_type i;
 			size_type max_size;
-
+			/*TESTER LES EXCEPTIONS ET TESTER AVEC VALL == NULL*/
 			i = 0;
 			max_size = std::numeric_limits<int>::max();
 			if (n < this->_size)
@@ -390,9 +396,10 @@ namespace ft
 			pointer			_element;
 			int				_constructor_type;
 	};
-}
-/*template<typename T, typename Allocator >
-bool operator==( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs )
+
+
+template<typename T, typename Allocator > 
+bool operator==( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
 {
 	int i;
 
@@ -413,37 +420,36 @@ bool operator==( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rh
 }
 
 template<typename T, typename Allocator >
-bool operator!=( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs )
+bool operator!=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
 {
-	return (lhs == rhs);
-}
-}
-*/
-/*template<typename T, typename Allocator >
-bool operator<( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) 
-{
-	return ();
+	return (!(rhs == lhs));
 }
 
 template<typename T, typename Allocator >
-bool operator<=( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) 
+bool operator<( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
 {
-	return ();
+	return (lhs < rhs);
 }
 
 template<typename T, typename Allocator >
-bool operator>( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) 
+bool operator<=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
 {
-	return ();
+	return (!(lhs < rhs));
 }
 
 template<typename T, typename Allocator >
-bool operator>=( const vector<T,Allocator> & lhs, const vector<T,Allocator> & rhs ) 
+bool operator>( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
 {
-	return ();
+	return (lhs > rhs);
 }
 
-}*/
+template<typename T, typename Allocator >
+bool operator>=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+{
+	return (!(lhs > rhs));
+}
+
+}
 
 /*---------------------CLASSE TEST----------------------*/
 class A

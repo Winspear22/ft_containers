@@ -2,9 +2,9 @@ NAME = ft_containers
 NAME_T = container_test
 
 SRCS = srcs/main.cpp
-SRCS_T = srcs/test.cpp srcs/A.cpp
+SRCS_T = srcs/test.cpp
 
-INCLUDE= vector.hpp
+INCLUDE= vector.tpp
 
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
