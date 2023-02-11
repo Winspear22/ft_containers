@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/11 10:57:15 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/11 11:15:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define VECTOR_TPP
 
 # include "utils.hpp"
-# include "iterator_traits.tpp"
 
 class random_access_iterator;
 
@@ -74,7 +73,7 @@ namespace ft
 	typename ft::iterator_traits<Iter>::difference_type 
     do_distance(Iter first, Iter last, std::input_iterator_tag)
 	{
-    	typename ft::iterator_traits<It>::difference_type result = 0;
+    	typename ft::iterator_traits<Iter>::difference_type result = 0;
     	while (first != last) {
         	++first;
         	++result;
