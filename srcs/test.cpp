@@ -29,6 +29,16 @@ int main(void)
 	ft::vector<unsigned long int> unsigned_long_intv;
 	ft::vector<unsigned long int> unsigned_long_intv2(100, 0);
 
+	ft::vector<int>::iterator it;
+	intv.push_back(10);
+	it = intv.begin();
+	//while (it != intv.end())
+	//{
+		if (it == intv.end())
+			std::cout << RED << "Error" << NORMAL << std::endl;
+		std::cout << *it << std::endl;
+		it++;
+	//}
 
 	return (0);
 }

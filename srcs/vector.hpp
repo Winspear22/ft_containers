@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/11 15:16:48 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/13 16:34:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,10 @@ namespace ft
 			typedef typename allocator_type::const_reference	const_reference;
 			typedef typename allocator_type::pointer			pointer;
 			typedef typename allocator_type::const_pointer		const_pointer;
-			/*
-			typedef 		 inconnu							iterator;
-			typedef			 inconnu							const_iterator;
+		
+			typedef	ft::random_access_iterator<value_type>		iterator;
+			typedef	ft::random_access_iterator<const value_type> const_iterator;
+		/*
 			typedef			 inconnu							reverse_iterator;
 			typedef			 inconnu							const_reverse_iterator;
 			*/
@@ -209,7 +210,27 @@ namespace ft
 		/*---------------------------------ITERARTORS-----------------------------------*/
 		/*==============================================================================*/
 		/*------------------------------------BEGIN-------------------------------------*/
+		iterator begin()
+		{
+			if (this->empty())
+				return (iterator(this->_element + this->size()));
+			return (iterator(this->_element));
+		}
+		const_iterator begin() const
+		{
+			if (this->empty())
+				return (const_iterator(this->_element + this->size()));
+			return (const_iterator(this->_element));
+		}
 		/*------------------------------------END---------------------------------------*/
+		iterator end()
+		{
+			return (iterator(this->_element + this->size()));
+		}
+		const_iterator end() const
+		{
+			return (const_iterator(this->_element + this->size()));
+		}
 		/*------------------------------------RBEGIN------------------------------------*/
 		/*------------------------------------REND--------------------------------------*/
 		/*------------------------------------CBEGIN------------------------------------*/
@@ -334,9 +355,28 @@ namespace ft
 			}
 		}
 		/*==============================================================================*/
-
-
 		
+		/*==============================================================================*/
+		/*-----------------------------------MODIFIERS----------------------------------*/
+		/*==============================================================================*/
+
+		/*-----------------------------------PUSH BACK----------------------------------*/
+		void push_back( const value_type& val)
+		{
+			if (this->size() + 1 > this->capacity())
+			{
+				this->reserve(this->size() + 1);
+				this->_allocator.construct(&this->_element[this->size()], val);
+				this->_size++;
+			}
+			else
+			{
+				this->_allocator.construct(&this->_element[this->size()], val);
+				this->_size++;
+			}
+				return ;
+		}
+
 		/*==============================================================================*/
 		private:
 			size_type		_size;
@@ -345,66 +385,7 @@ namespace ft
 			pointer			_element;
 			int				_constructor_type;
 	};
-/*template<typename T, typename Allocator > 
-	bool operator==( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
-	{
-		int i;
-
-		i = 0;
-		if (lhs.size() == rhs.size())
-		{
-			while (i < lhs.size())
-			{
-				if (lhs[i] != rhs[i])
-					return (FAILURE);
-				i++;
-			}
-		}
-		else
-			return (FAILURE);
-		return (SUCCESS);
-	}
-
-	template<typename T, typename Allocator >
-	bool operator!=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
-	{
-		return (!(rhs == lhs));
-	}
-
-	template<typename T, typename Allocator >
-	bool operator<( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
-	{
-		return (lhs < rhs);
-	}
-
-	template<typename T, typename Allocator >
-	bool operator<=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
-	{
-		return (!(lhs < rhs));
-	}
-
-	template<typename T, typename Allocator >
-	bool operator>( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
-	{
-		return (lhs > rhs);
-	}
-
-	template<typename T, typename Allocator >
-	bool operator>=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
-	{
-		return (!(lhs > rhs));
-	}*/
 }
 
-/*---------------------CLASSE TEST----------------------*/
-class A
-{
-public:
-	A( void );
-	~A( void );
-	int getA( void );
-private:
-	int a;
-/*-----------------------------------------------------*/
-};
+
 #endif
