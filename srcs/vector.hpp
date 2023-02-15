@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/13 16:34:34 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/15 02:25:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,19 +363,105 @@ namespace ft
 		/*-----------------------------------PUSH BACK----------------------------------*/
 		void push_back( const value_type& val)
 		{
-			if (this->size() + 1 > this->capacity())
+			vector tmp;
+			size_type i;
+
+			i = 0;
+			if (this->capacity() == 0)
 			{
-				this->reserve(this->size() + 1);
-				this->_allocator.construct(&this->_element[this->size()], val);
-				this->_size++;
+				this->reserve(1);
+				this->_element = this->_allocator.allocate(this->capacity());
 			}
-			else
+			else if (this->size() == this->capacity() && this->capacity() > 0)
 			{
-				this->_allocator.construct(&this->_element[this->size()], val);
-				this->_size++;
+				tmp._element = this->_allocator.allocate(this->capacity() + 1); //* 2 en cas de bug
+				while (i < this->size())
+				{
+					this->_allocator.construct(&tmp._element[i], this->_element[i]);
+					this->_allocator.destroy(&this->_element[i]);
+					i++;
+				}
+				this->_allocator.deallocate(this->_element, this->capacity());
+				this->_capacity = this->_capacity + 1; //* 2 en cas de bug
+				this->_element = tmp._element;
 			}
-				return ;
+			this->_allocator.construct(&this->_element[this->size()], val);
+			this->_size++;
+			return ;
 		}
+		/*-----------------------------------POP BACK-----------------------------------*/
+		void pop_back()
+		{
+			size_type i;
+
+			if (this->size() > 0)
+			{
+				i = 0;
+				while (i < this->size())
+					i++;
+				this->_allocator.destroy(&this->_element[i]);
+				this->_size = this->_size - 1;
+			}
+			return ;
+		}
+		/*-------------------------------------ERASE-----------------------------------*/
+		/*-------------------------------------SWAP------------------------------------*/
+		void swap(vector & x)
+		{
+			vector tmp(*this);
+			pointer toto;
+			size_type tmp_size;
+			size_type tmp_capacity;
+			//vector tmp;
+
+			//tmp = *this;
+			
+			toto = this->_element;
+			tmp_capacity = this->_capacity;
+			tmp_size = this->_size;
+		/*	this->_element = x._element;
+			x._element = tmp._element;
+			this->_capacity = x._capacity;
+			x._capacity = tmp._capacity;
+			this->_size = x._size;
+			x._size = tmp._size;*/
+			this->_element = x._element;
+			x._element = toto;
+			this->_capacity = x._capacity;
+			x._capacity = tmp_capacity;
+			this->_size = x._size;
+			x._size = tmp_size;
+			return ;
+		}
+		/*	void swap (vector& x) {
+				ft::swap(_element, x._element);
+				ft::swap(_size, x._size);
+				ft::swap(_capacity, x._capacity);
+			};*/
+
+
+		/*-------------------------------------CLEAR-----------------------------------*/
+		void clear()
+		{
+			size_type i;
+			size_type initial_size;
+
+			if (this->size() > 0)
+			{
+				i = 0;
+				initial_size = this->size();
+				while (i < initial_size)
+				{
+					this->_allocator.destroy(&this->_element[i]);
+					this->_size = this->_size - 1;
+					i++;
+				}
+			}
+			return ;
+		}
+		/*------------------------------------EMPLACE-----------------------------------*/
+
+		
 
 		/*==============================================================================*/
 		private:

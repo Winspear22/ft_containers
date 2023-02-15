@@ -3,7 +3,6 @@
 
 # include "random_access_iterator_tag.hpp"
 # include "utils.hpp"
-
 namespace ft
 {
 	template <class Iter>
@@ -32,7 +31,7 @@ namespace ft
 		/*==============================================================================*/
 		
 		/*------------------------------Default constructor-----------------------------*/	
-			random_access_iterator( /*ARG*/ )
+			random_access_iterator(/*ARG*/): _value()
 			{
 				std::cout << "Vector random access iterator empty default constructor called." << std::endl;
 				return ;
@@ -40,8 +39,9 @@ namespace ft
 		/*------------------------------Default constructor-----------------------------*/	
 			random_access_iterator( pointer _value )
 			{
-				std::cout << "Vector random access iterator default constructor called." << std::endl;
 				this->_value = _value;
+				std::cout << "Vector random access iterator default constructor called." << std::endl;
+
 				return ;
 			}
 		/*-------------------------------Copy constructor-----------------------------*/	
@@ -63,12 +63,22 @@ namespace ft
 		/*==============================================================================*/
 		/*----------------------------------OPERATOR =----------------------------------*/
 		/*==============================================================================*/
-		random_access_iterator &operator=( const random_access_iterator& rhs )
+		/*random_access_iterator &operator=( const random_access_iterator& rhs )
 		{
 			std::cout << "Vector random access iterator operator= called." << std::endl;
 			this->_value = rhs._value;
 			return (*this);
-		}
+		}*/
+			random_access_iterator &operator=(const random_access_iterator &rhs)
+			{
+				std::cout << "Vector random access iterator operator= called." << std::endl;
+
+				if (*this == rhs)
+					return (*this);
+				else
+					this->_value = rhs._value;
+				return (*this);
+			}
 		
 			random_access_iterator &operator++(void)
 			{
