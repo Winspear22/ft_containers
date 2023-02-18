@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/15 02:25:53 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/18 12:05:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,11 +321,11 @@ namespace ft
 				tmp._element = this->_element;
 				if (this->_capacity > 0)
 				{
-					i = 0;					
+					i = 0;		
+					std::cout << BYELLOW << "salut" << NORMAL << std::endl;
 					while (i < this->_capacity)
 					{
-						
-						this->_allocator.construct(&tmp._element[i], n);
+						this->_allocator.construct(&tmp._element[i], this->_element[i]);
 						this->_allocator.destroy(&this->_element[i]);
 						i++;
 					}
@@ -369,11 +369,13 @@ namespace ft
 			i = 0;
 			if (this->capacity() == 0)
 			{
+				std::cout << BRED << "salut" << NORMAL << std::endl;
 				this->reserve(1);
 				this->_element = this->_allocator.allocate(this->capacity());
 			}
 			else if (this->size() == this->capacity() && this->capacity() > 0)
 			{
+				std::cout << BBLUE << "salut" << NORMAL << std::endl;
 				tmp._element = this->_allocator.allocate(this->capacity() + 1); //* 2 en cas de bug
 				while (i < this->size())
 				{
@@ -385,6 +387,7 @@ namespace ft
 				this->_capacity = this->_capacity + 1; //* 2 en cas de bug
 				this->_element = tmp._element;
 			}
+			std::cout << BGREEN << "salut" << NORMAL << std::endl;
 			this->_allocator.construct(&this->_element[this->size()], val);
 			this->_size++;
 			return ;

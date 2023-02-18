@@ -31,16 +31,17 @@ namespace ft
 		/*==============================================================================*/
 		
 		/*------------------------------Default constructor-----------------------------*/	
-			random_access_iterator(/*ARG*/): _value()
+			random_access_iterator(/*ARG*/)//: _value()
 			{
-				std::cout << "Vector random access iterator empty default constructor called." << std::endl;
+				this->_value = NULL;
+				//std::cout << "Vector random access iterator empty default constructor called." << std::endl;
 				return ;
 			}
 		/*------------------------------Default constructor-----------------------------*/	
 			random_access_iterator( pointer _value )
 			{
 				this->_value = _value;
-				std::cout << "Vector random access iterator default constructor called." << std::endl;
+				//std::cout << "Vector random access iterator default constructor called." << std::endl;
 
 				return ;
 			}
@@ -48,7 +49,7 @@ namespace ft
 
 			random_access_iterator( const random_access_iterator & copy )
 			{
-				std::cout << "Vector random access iterator copy constructor called." << std::endl;
+				//std::cout << "Vector random access iterator copy constructor called." << std::endl;
 				*this = copy;
 				return ;
 			}
@@ -57,47 +58,100 @@ namespace ft
 		/*==============================================================================*/
 			~random_access_iterator( void )
 			{
-				std::cout << "Vector random access iterator destructor called." << std::endl;
+				//std::cout << "Vector random access iterator destructor called." << std::endl;
 				return ;
 			}
 		/*==============================================================================*/
 		/*----------------------------------OPERATOR =----------------------------------*/
 		/*==============================================================================*/
-		/*random_access_iterator &operator=( const random_access_iterator& rhs )
-		{
-			std::cout << "Vector random access iterator operator= called." << std::endl;
-			this->_value = rhs._value;
-			return (*this);
-		}*/
-			random_access_iterator &operator=(const random_access_iterator &rhs)
+			random_access_iterator &operator=( const random_access_iterator& rhs )
 			{
-				std::cout << "Vector random access iterator operator= called." << std::endl;
-
-				if (*this == rhs)
-					return (*this);
-				else
-					this->_value = rhs._value;
+				//std::cout << "Vector random access iterator operator= called." << std::endl;
+				this->_value = rhs._value;
 				return (*this);
 			}
-		
-			random_access_iterator &operator++(void)
+		/*==============================================================================*/
+		/*---------------------------------OPERATOR LIST--------------------------------*/
+		/*==============================================================================*/
+
+		/*-----------------------------Dereference Operator-----------------------------*/	
+			reference operator*() const
+			{
+				return *(this->_value);
+			}
+		/*-------------------------Class Member Access Operator-------------------------*/
+			pointer operator->() const
+			{
+				return (&(*this->_value));
+			}
+		/*---------------------------Input Iterator Operators---------------------------*/
+		/*-------------------------Pre/Post Increment Operator--------------------------*/
+			random_access_iterator& operator++()
 			{
 				++this->_value;
 				return (*this);
 			}
-
 			random_access_iterator operator++(int)
 			{
-				random_access_iterator tmp(*this);
-				operator++();
-				return (tmp);
+				random_access_iterator copy(*this);
+				++this->_value;
+				return (copy);
+			} 
+		/*-----------------------Bidirectional Iterator Operators-----------------------*/
+		/*-------------------------Pre/Post Decrement Operator--------------------------*/
+			random_access_iterator& operator--()
+			{
+				--this->_value;
+				return (*this);
+			}
+			random_access_iterator operator--(int)
+			{
+				random_access_iterator copy(*this);
+				--this->_value;
+				return (copy);
+			} 
+		/*-----------------------Random Access Iterator Operators-----------------------*/
+		/*-----------------------Square bracket Iterator Operator-----------------------*/
+			reference			operator[]( const difference_type& i ) const
+			{
+				return (this->_value[i]);
+			}
+		/*-----------------------------+= Iterator Operator-----------------------------*/
+			random_access_iterator& operator+=( const difference_type& i )
+			{
+				this->_value = this->_value + i;
+				return (*this);
+			}
+		/*------------------------------+ Iterator Operator-----------------------------*/
+			random_access_iterator operator+( const difference_type& i ) const
+			{
+				random_access_iterator copy(*this);
+				copy = copy + i;
+				return (copy);
+			}
+		/*---------------------------- -= Iterator Operator-----------------------------*/
+			random_access_iterator& operator-=( const difference_type& i )
+			{
+				this->_value = this->_value - i;
+				return (*this);
+			}
+		/*----------------------------- - Iterator Operator-----------------------------*/
+			random_access_iterator operator-( const difference_type& i ) const
+			{
+				random_access_iterator copy(*this);
+				copy = copy - i;
+				return (copy);
+			}
+			/*Je n'ai pas compris celui-là*/
+			operator random_access_iterator<const value_type>() const 
+			{
+				return (random_access_iterator<const value_type>(this->_value));
 			}
 			bool operator==(const random_access_iterator& op) const 
 			{
 				return (this->_value == op._value);
 			};
 		
-		reference operator*(void) const {return *this->_value;};
 
 			bool operator!=(const random_access_iterator& op) const 
 			{
