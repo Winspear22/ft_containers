@@ -136,31 +136,55 @@ namespace ft
 				return (*this);
 			}
 		/*----------------------------- - Iterator Operator-----------------------------*/
-			random_access_iterator operator-( const difference_type& i ) const
+		/*	random_access_iterator operator-( const difference_type i ) 
 			{
-				random_access_iterator copy(*this);
-				copy = copy - i;
-				return (copy);
+				//random_access_iterator copy(*this);
+				//copy = copy - i;
+								return (this->_value - i);
+
+			//	return (copy);
+			}*/
+			random_access_iterator operator-(const difference_type n)
+			{
+				return (this->_value - n);
 			}
+
 			/*Je n'ai pas compris celui-là*/
 			operator random_access_iterator<const value_type>() const 
 			{
 				return (random_access_iterator<const value_type>(this->_value));
 			}
-			bool operator==(const random_access_iterator& op) const 
-			{
-				return (this->_value == op._value);
-			};
-		
+		/*-----------------------*/
+			
 
-			bool operator!=(const random_access_iterator& op) const 
+			bool operator>( const random_access_iterator& rhs ) const 
 			{
-				return (this->_value != op._value);
-			};
+				return (this->_value > rhs._value);
+			}
+			bool operator>=( const random_access_iterator& rhs ) const 
+			{
+				return (this->_value >= rhs._value);
+			}
+			bool operator<( const random_access_iterator& rhs ) const 
+			{
+				return (this->_value < rhs._value);
+			}
+			bool operator<=( const random_access_iterator& rhs ) const 
+			{
+				return (this->_value <= rhs._value);
+			}
+			bool operator==( const random_access_iterator& rhs ) const 
+			{
+				return (this->_value == rhs._value);
+			}
+			bool operator!=( const random_access_iterator& rhs ) const 
+			{
+				return (this->_value != rhs._value);
+			}
+
 		private:
 			pointer _value;
 	};
-	
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/18 12:05:32 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/19 18:27:49 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ namespace ft
 		/*------------------------------Default constructor-----------------------------*/	
 			explicit vector( const allocator_type& alloc = allocator_type() )
 			{
-				std::cout << BWHITE << "DEFAULT " << BPURPLE << "vector "<< BGREEN << "container constructor called" << NORMAL << std::endl;
+				//std::cout << BWHITE << "DEFAULT " << BPURPLE << "vector "<< BGREEN << "container constructor called" << NORMAL << std::endl;
 				this->_allocator = alloc;
 				this->_size = 0;
 				this->_capacity = 0;
@@ -88,9 +88,9 @@ namespace ft
 			}
 		
 		/*-------------------------------Fill constructor-------------------------------*/
-			explicit vector( size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type() )
+		/*	explicit vector( size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type() )
 			{
-				std::cout << BWHITE << "FILL " << BPURPLE << "vector "<< BCYAN << "container constructor called" << NORMAL << std::endl;
+				//std::cout << BWHITE << "FILL " << BPURPLE << "vector "<< BCYAN << "container constructor called" << NORMAL << std::endl;
 				size_type i;
 				size_type max_size;
 				this->_element = NULL;
@@ -116,7 +116,18 @@ namespace ft
 					}		
 				}
 				return ;
-			}
+			}*/
+			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
+			{
+				this->_allocator = alloc;
+				this->_size = n;
+				this->_capacity = n;
+				this->_element = NULL;
+				if (this->_capacity)
+					this->_element = this->_allocator.allocate(n);
+				for (size_type i = 0; i < n; i++) this->_allocator.construct(&this->_element[i], val);
+
+			}; 
 	
 		/*-------------------------------Range constructor------------------------------*/
 		template <class InputIterator> // terminer le constructeur
@@ -138,7 +149,7 @@ namespace ft
 		/*-------------------------------Copy constructor-------------------------------*/
 		vector ( const vector& x )
 		{
-			std::cout << BWHITE << "COPY " << BPURPLE << "vector "<< BYELLOW << "container constructor called" << NORMAL << std::endl;
+			//std::cout << BWHITE << "COPY " << BPURPLE << "vector "<< BYELLOW << "container constructor called" << NORMAL << std::endl;
 			size_type i;
 			this->_allocator = x._allocator;
 			this->_size = x._size;
@@ -163,16 +174,16 @@ namespace ft
 		/*==============================================================================*/
 			~vector( void )
 			{
-				if (this->_constructor_type == DEFAULT)
-					std::cout << BWHITE << "DEFAULT " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
-				else if (this->_constructor_type == FILL)
-					std::cout << BWHITE << "FILL " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
-				else if (this->_constructor_type == RANGE)
-					std::cout << BWHITE << "RANGE " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
-				else if (this->_constructor_type == COPY)
-					std::cout << BWHITE << "COPY " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
-				else if (this->_constructor_type == EQUAL)
-					std::cout << BWHITE << "EQUAL " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
+				//if (this->_constructor_type == DEFAULT)
+					//std::cout << BWHITE << "DEFAULT " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
+			//	else if (this->_constructor_type == FILL)
+					//std::cout << BWHITE << "FILL " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
+			//	else if (this->_constructor_type == RANGE)
+					//std::cout << BWHITE << "RANGE " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
+			//	else if (this->_constructor_type == COPY)
+					//std::cout << BWHITE << "COPY " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
+			//	else if (this->_constructor_type == EQUAL)
+					//std::cout << BWHITE << "EQUAL " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
 				size_type i;
 				if (this->_capacity > 0) // PAS SUR D'UTILISER SIZE
 				{
@@ -195,13 +206,41 @@ namespace ft
 			vector& operator= (const vector& x)
 			{
 				std::cout << BWHITE << "EQUAL " << BPURPLE << "vector "<< BBLACK << "container overloaded operator called" << NORMAL << std::endl;
-				this->_allocator = x._allocator;
+				if (x == *this)
+					return (*this);
+				this->clear();
+		//		this->insert(begin(), x.begin(), x.end());
+				/*this->_allocator = x._allocator;
 				this->_size = x._size;
 				this->_capacity = x._capacity; //je suis pas sur, cela pourrait etre x.size
-				this->_constructor_type = EQUAL;
+				*/this->_constructor_type = EQUAL;
 				return (*this);
 			}
-		
+		/*	template<class InputIterator>
+			void	insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+			{
+				difference_type pos = position - this->_element;
+				size_type n = ft::distance(first, last);
+
+				if (n + this->_size > this->_capacity)
+				{
+					if (this->_size + n > this->_size * 2)
+						reserve(this->_size + n);
+					else
+						reserve(this->_size * 2);
+				}
+				for (difference_type i = this->_size; i > pos; i--)
+				{
+					this->_allocator.construct(&this->_element[i + n - 1], this->_element[i - 1]);
+					this->_allocator.destroy(&this->_element[i - 1]);
+				}
+				for (size_type i = 0; first != last; first++, i++)
+				{
+					this->_allocator.construct(&this->_element[pos + i], *first);
+				}
+				this->_size += n;
+			}
+		*/
 		/*==============================================================================*/
 		/*------------------------------FONCTIONS MEMBRES-------------------------------*/
 		/*==============================================================================*/
@@ -257,7 +296,7 @@ namespace ft
 		{
 			size_type i;
 			size_type max_size;
-			/*TESTER LES EXCEPTIONS ET TESTER AVEC VALL == NULL*/
+			//TESTER LES EXCEPTIONS ET TESTER AVEC VALL == NULL
 			i = 0;
 			max_size = std::numeric_limits<int>::max();
 			if (n < this->_size)
@@ -289,6 +328,27 @@ namespace ft
 			}
 			return ;
 		}
+		/*void	resize(size_t n, value_type val = value_type())
+			{
+				if (n < this->_size)
+				{
+					for (size_type i = n; i < this->_size; i++)
+					{
+						this->_allocator.destroy(&this->_element[i]);
+					}
+					this->_size = n;
+				}
+				else if (n > this->_size)
+				{
+						if (n > this->_size * 2)
+							this->reserve(n);
+						else 
+							this->reserve (this->_size * 2);
+						for (size_type i = this->_size; i < n; i++)
+								this->_allocator.construct(&this->_element[i], val);
+						this->_size = n;
+				}		
+			}*/
 		/*------------------------------------CAPACITY----------------------------------*/
 		size_type capacity() const
 		{
@@ -302,6 +362,28 @@ namespace ft
 			return (FAILURE); // The conainter is not empty, it returns fail
 		}
 		/*------------------------------------RESERVE-----------------------------------*/
+	/*	void reserve(size_type n) 
+			{
+					// - si n > la capacity la fonction realloue la taille demandée pour augmenter la capacity a n
+					// - dans les autres cas on ne realloue pas et on supprime juste la quantitée d'elements apres n (vector::erase)
+				if (n > this->max_size())
+					throw std::length_error("vector::reserve");
+				else if (n > this->_capacity)
+				{
+					pointer tmp = this->_allocator.allocate(n);
+					if (this->_capacity > 0) 
+					{
+						for (size_type i = 0; i < this->_size; i++)
+						{
+							this->_allocator.construct(&tmp[i], this->_element[i]);
+							this->_allocator.destroy(&this->_element[i]);
+						}
+						this->_allocator.deallocate(this->_element, this->_capacity);
+					}
+					this->_capacity = n;
+					this->_element = tmp;
+				}
+			}*/
 		void reserve(size_type n)
 		{
 			std::string		msg_error;
@@ -322,13 +404,13 @@ namespace ft
 				if (this->_capacity > 0)
 				{
 					i = 0;		
-					std::cout << BYELLOW << "salut" << NORMAL << std::endl;
-					while (i < this->_capacity)
+					while (i < this->_size)
 					{
 						this->_allocator.construct(&tmp._element[i], this->_element[i]);
 						this->_allocator.destroy(&this->_element[i]);
 						i++;
 					}
+				//	this->_allocator.deallocate(this->_element, this->_capacity);
 				}
 				this->_element = tmp._element;			
 				this->_capacity = n;
@@ -359,6 +441,47 @@ namespace ft
 		/*==============================================================================*/
 		/*-----------------------------------MODIFIERS----------------------------------*/
 		/*==============================================================================*/
+		reference operator[]( size_type n )
+		{
+			return (this->_element[n]);	
+		}
+		const_reference operator[]( size_type n ) const
+		{
+			return (this->_element[n]);
+		}
+		reference at( size_type n )
+		{
+			if (n > this->_size)
+				throw std::out_of_range("\033[1;31mError. \033[1;37mat()\033[1;31m memory out of reach.\033[0m");
+			return (this->_element[n]);
+		}
+		const_reference at( size_type n ) const
+		{
+			if (n > this->_size)
+				throw std::out_of_range("\033[1;31mError. \033[1;37mconst at()\033[1;31m memory out of reach.\033[0m");
+			return (this->_element[n]);
+		}
+		const_reference	front(void) const
+		{
+			return (this->_element[0]);
+		}
+		reference		back(void) // return a reference to the last element in the vector
+		{
+			return (this->_element[_size - 1]);
+		} 
+		const_reference	back(void) const
+		{
+			return (this->_element[_size - 1]);
+		}
+		
+
+		
+		
+		/*==============================================================================*/
+
+		/*==============================================================================*/
+		/*-----------------------------------MODIFIERS----------------------------------*/
+		/*==============================================================================*/
 
 		/*-----------------------------------PUSH BACK----------------------------------*/
 		void push_back( const value_type& val)
@@ -369,13 +492,11 @@ namespace ft
 			i = 0;
 			if (this->capacity() == 0)
 			{
-				std::cout << BRED << "salut" << NORMAL << std::endl;
 				this->reserve(1);
 				this->_element = this->_allocator.allocate(this->capacity());
 			}
 			else if (this->size() == this->capacity() && this->capacity() > 0)
 			{
-				std::cout << BBLUE << "salut" << NORMAL << std::endl;
 				tmp._element = this->_allocator.allocate(this->capacity() + 1); //* 2 en cas de bug
 				while (i < this->size())
 				{
@@ -387,7 +508,6 @@ namespace ft
 				this->_capacity = this->_capacity + 1; //* 2 en cas de bug
 				this->_element = tmp._element;
 			}
-			std::cout << BGREEN << "salut" << NORMAL << std::endl;
 			this->_allocator.construct(&this->_element[this->size()], val);
 			this->_size++;
 			return ;
@@ -474,6 +594,56 @@ namespace ft
 			pointer			_element;
 			int				_constructor_type;
 	};
+	
+template<typename T, typename Allocator > 
+	bool operator==( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
+	{
+		unsigned int i;
+
+		i = 0;
+		if (lhs.size() == rhs.size())
+		{
+			while (i < lhs.size())
+			{
+				if (lhs[i] != rhs[i])
+					return (FAILURE);
+				i++;
+			}
+		}
+		else
+			return (FAILURE);
+		return (SUCCESS);
+	}
+
+	template<typename T, typename Allocator >
+	bool operator!=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
+	{
+		return (!(rhs == lhs));
+	}
+
+	template<typename T, typename Allocator >
+	bool operator<( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+	{
+		return (lhs < rhs);
+	}
+
+	template<typename T, typename Allocator >
+	bool operator<=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+	{
+		return (!(lhs < rhs));
+	}
+
+	template<typename T, typename Allocator >
+	bool operator>( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+	{
+		return (lhs > rhs);
+	}
+
+	template<typename T, typename Allocator >
+	bool operator>=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+	{
+		return (!(lhs > rhs));
+	}
 }
 
 
