@@ -7,7 +7,7 @@
 
 #define TESTED_TYPE int
 
-void	is_empty(TESTED_NAMESPACE::vector<TESTED_TYPE> const &vct)
+void	is_empty(ft::vector<TESTED_TYPE> const &vct)
 {
 	std::cout << "is_empty: " << vct.empty() << std::endl;
 }
