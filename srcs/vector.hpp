@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/20 14:05:51 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/20 17:44:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,7 @@
 class random_access_iterator;
 
 namespace ft
-{	
-	template<class Iter>
-	typename ft::iterator_traits<Iter>::difference_type 
-    do_distance(Iter first, Iter last, std::input_iterator_tag)
-	{
-    	typename ft::iterator_traits<Iter>::difference_type result = 0;
-    	while (first != last) {
-        	++first;
-        	++result;
-    	}
-    	return result;
-	}
-
-	template<class Iter>
-	typename ft::iterator_traits<Iter>::difference_type 
-    do_distance(Iter first, Iter last, std::random_access_iterator_tag)
-	{
-    	return last - first;
-	}
-
-	
-	template<class Iter>
-	typename ft::iterator_traits<Iter>::difference_type 
-	distance(Iter first, Iter last)
-	{
-    	return ft::do_distance(first, last,
-                               typename ft::iterator_traits<Iter>::iterator_category());
-	}
-
+{
 	template<typename T, typename Allocator = std::allocator<T> >
 	class vector
 	{
@@ -123,8 +95,10 @@ namespace ft
 		{
 			this->_allocator = alloc;
 			this->_size = 0;
-			this->_capacity = ft::distance(first, last);
+
+			//this->_capacity = ft::distance(first, last);
 			/*NE PAS OUBLIER DE PROTEGER LE ALLOCATE ET DE TOUT METTRE EN WHILE*/
+
 			
 			if (this->_capacity > 0) // le conteneur  a déjà été protégé car on ne peut pas créer un conteneur plus grand que la limite, donc pas besoin de protéger le allocate
 				this->_element = this->_allocator.allocate(this->_capacity);
@@ -233,10 +207,6 @@ namespace ft
 		}
 		/*------------------------------------RBEGIN------------------------------------*/
 		/*------------------------------------REND--------------------------------------*/
-		/*------------------------------------CBEGIN------------------------------------*/
-		/*------------------------------------CEND--------------------------------------*/
-		/*------------------------------------CRBEGIN-----------------------------------*/
-		/*------------------------------------CREND-------------------------------------*/
 		/*==============================================================================*/
 
 		/*==============================================================================*/
@@ -388,15 +358,28 @@ namespace ft
 		{
 			return (this->_element[0]);
 		}
-		reference		back(void) // return a reference to the last element in the vector
+		reference		back(void)
 		{
-			return (this->_element[_size - 1]);
+			return (this->_element[this->size() - 1]);
 		} 
 		const_reference	back(void) const
 		{
-			return (this->_element[_size - 1]);
+			return (this->_element[this->size() - 1]);
 		}
-		
+		value_type *data()
+		{
+			value_type *ret;
+
+			ret = this->_element;
+			return (ret);
+		}
+		const value_type *data() const
+		{
+			const value_type *ret;
+
+			ret = this->_element;
+			return (ret);
+		}
 
 		
 		
@@ -405,6 +388,26 @@ namespace ft
 		/*==============================================================================*/
 		/*-----------------------------------MODIFIERS----------------------------------*/
 		/*==============================================================================*/
+		/*------------------------------------ASSIGN------------------------------------*/
+		/*NE PAS OUBLIER LE ASSIGN AVEC RANGE*/
+		void assign ( size_type n, const value_type& val )
+		{
+			size_type i;
+
+			if (this->empty() == FAILURE)
+				this->clear();
+			this->reserve(n);
+			if (this->_capacity > 0)
+			{
+				i = 0;
+				while (i < n)
+				{
+					this->_allocator.construct(&this->_element[i], val);
+					i++;
+				}	
+			}		
+			return ;
+		}
 
 		/*-----------------------------------PUSH BACK----------------------------------*/
 		void push_back( const value_type& val)
@@ -479,12 +482,6 @@ namespace ft
 			x._size = tmp_size;
 			return ;
 		}
-		/*	void swap (vector& x) {
-				ft::swap(_element, x._element);
-				ft::swap(_size, x._size);
-				ft::swap(_capacity, x._capacity);
-			};*/
-
 
 		/*-------------------------------------CLEAR-----------------------------------*/
 		void clear()

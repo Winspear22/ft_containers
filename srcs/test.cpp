@@ -7,49 +7,43 @@
 
 #define TESTED_TYPE int
 
-void	is_empty(ft::vector<TESTED_TYPE> const &vct)
-{
-	std::cout << "is_empty: " << vct.empty() << std::endl;
-}
-
 int		main(void)
 {
-	const int start_size = 7;
-	ft::vector<TESTED_TYPE> vct(start_size, 20);
-	ft::vector<TESTED_TYPE> vct2;
-	ft::vector<TESTED_TYPE>::iterator it = vct.begin();
+	ft::vector<TESTED_TYPE> vct(7);
+	ft::vector<TESTED_TYPE> vct_two(4);
+	ft::vector<TESTED_TYPE> vct_three;
+	ft::vector<TESTED_TYPE> vct_four;
 
-	for (int i = 2; i < start_size; ++i)
-		it[i] = (start_size - i) * 3;
-	printSize(vct, true);
+	for (unsigned long int i = 0; i < vct.size(); ++i)
+		vct[i] = (vct.size() - i) * 3;
+	for (unsigned long int i = 0; i < vct_two.size(); ++i)
+		vct_two[i] = (vct_two.size() - i) * 5;
+	printSize(vct);
+	printSize(vct_two);
 
-	vct.resize(10, 42);
-	printSize(vct, true);
+	vct_three.assign(10, 10);
+	vct.assign(20, 20);
+	vct_two.assign(2, 42);
+	vct_four.assign(4, 21);
 
-	vct.resize(18, 43);
-	printSize(vct, true);
-	vct.resize(10);
-	printSize(vct, true);
-	vct.resize(23, 44);
-	printSize(vct, true);
-	vct.resize(5);
-	printSize(vct, true);
-	vct.reserve(5);
-	vct.reserve(3);
-	printSize(vct, true);
-	vct.resize(87);
-	vct.resize(5);
-	printSize(vct, true);
+	std::cout << "\t### After assign(): ###" << std::endl;
 
-	is_empty(vct2);
-	vct2 = vct;
-	is_empty(vct2);
-	vct.reserve(vct.capacity() + 1);
-	printSize(vct, true);
-	printSize(vct2, true);
+	printSize(vct);
+	printSize(vct_two);
+	printSize(vct_three);
+	printSize(vct_four);
 
-	vct2.resize(0);
-	is_empty(vct2);
-	printSize(vct2, true);
+	vct_four.assign(6, 84);
+	printSize(vct_four);
+
+	std::cout << "\t### assign() on enough capacity and low size: ###" << std::endl;
+
+	vct.assign(5, 53);
+	vct_two.assign(5, 10);
+
+	printSize(vct);
+	printSize(vct_two);
+
 	return (0);
 }
+
