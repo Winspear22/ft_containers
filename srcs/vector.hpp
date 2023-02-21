@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/20 17:44:59 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/21 16:42:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@ class random_access_iterator;
 
 namespace ft
 {
+	template<class InputIterator>
+   	typename ft::iterator_traits<InputIterator>::difference_type
+    distance (InputIterator first, InputIterator last)
+    {
+        typename ft::iterator_traits<InputIterator>::difference_type rtn = 0;
+        while (first != last)
+        {
+            first++;
+            rtn++;
+        }
+        return (rtn);
+    }
+
 	template<typename T, typename Allocator = std::allocator<T> >
 	class vector
 	{
@@ -169,10 +182,12 @@ namespace ft
 		/*==============================================================================*/
 			vector& operator=(const vector& x)
 			{
-				std::cout << BWHITE << "EQUAL " << BPURPLE << "vector "<< BBLACK << "container overloaded operator called" << NORMAL << std::endl;
+				//std::cout << BWHITE << "EQUAL " << BPURPLE << "vector "<< BBLACK << "container overloaded operator called" << NORMAL << std::endl;
 				if (*this == x)
 					return *this;
+				this->clear();
 				this->_element = x._element;
+				//this->insert(begin(), x.begin(), x.end());
 				return (*this);
 			}
 			
@@ -184,6 +199,7 @@ namespace ft
 		/*---------------------------------ITERARTORS-----------------------------------*/
 		/*==============================================================================*/
 		/*------------------------------------BEGIN-------------------------------------*/
+	
 		iterator begin()
 		{
 			if (this->empty())
@@ -270,9 +286,9 @@ namespace ft
 		{
 		//	std::cout << YELLOW << this->_size << NORMAL << std::endl;
 			if (this->size() == 0)
-				return (SUCCESS); // The container is empty, it returns true
-			return (FAILURE); // The conainter is not empty, it returns fail
-	
+				return (SUCCESS);
+			else // The container is empty, it returns true
+				return (FAILURE); // The conainter is not empty, it returns fail
 		}
 		/*------------------------------------RESERVE-----------------------------------*/
 		void reserve(size_type n)
@@ -389,7 +405,29 @@ namespace ft
 		/*-----------------------------------MODIFIERS----------------------------------*/
 		/*==============================================================================*/
 		/*------------------------------------ASSIGN------------------------------------*/
-		/*NE PAS OUBLIER LE ASSIGN AVEC RANGE*/
+		template <class InputIterator>
+  		void assign (typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type first, InputIterator last)
+		{
+			size_type i;
+			size_type dist;
+			
+			if (this->empty() == FAILURE)
+				this->clear();
+			this->reserve(distance(first, last));
+			if (this->_capacity > 0)
+			{
+				i = 0;
+				dist = distance(first, last);
+				while (i < dist)
+				{
+					this->_allocator.construct(&this->_element[i], *first);
+					first++;
+					i++;
+				}	
+			}
+			return ;
+		}
+		
 		void assign ( size_type n, const value_type& val )
 		{
 			size_type i;
@@ -405,7 +443,7 @@ namespace ft
 					this->_allocator.construct(&this->_element[i], val);
 					i++;
 				}	
-			}		
+			}
 			return ;
 		}
 
@@ -418,12 +456,13 @@ namespace ft
 			i = 0;
 			if (this->capacity() == 0)
 			{
-				this->reserve(1);
+				//this->reserve(1);
+				this->_capacity = 1;
 				this->_element = this->_allocator.allocate(this->capacity());
 			}
 			else if (this->size() == this->capacity() && this->capacity() > 0)
 			{
-				tmp._element = this->_allocator.allocate(this->capacity() + 1); //* 2 en cas de bug
+				tmp._element = this->_allocator.allocate(this->capacity() + 2); // * 2 en cas de bug
 				while (i < this->size())
 				{
 					this->_allocator.construct(&tmp._element[i], this->_element[i]);
@@ -431,11 +470,11 @@ namespace ft
 					i++;
 				}
 				this->_allocator.deallocate(this->_element, this->capacity());
-				this->_capacity = this->_capacity + 1; //* 2 en cas de bug
+				this->_capacity = this->_capacity + 2; // * 2 en cas de bug
 				this->_element = tmp._element;
 			}
 			this->_allocator.construct(&this->_element[this->size()], val);
-			this->_size++;
+			this->_size = this->_size + 1;
 			return ;
 		}
 		/*-----------------------------------POP BACK-----------------------------------*/
@@ -453,6 +492,39 @@ namespace ft
 			}
 			return ;
 		}
+		/*-------------------------------------INSERT----------------------------------*/
+		iterator insert( iterator position, const value_type& val )
+		{
+			difference_type val_pos;
+			difference_type capacity;
+			size_type		i;
+
+			val_pos = position - this->_element;
+			capacity = this->capacity();
+			i = 0;
+			if (val_pos > capacity)
+				reserve(this->_capacity + 1);
+			while (i < this->size())
+			{	
+				this->_allocator.construct(&this->_element[i], this->_element[i + 1]);
+				this->_allocator.destroy(&this->_element[i + 1]);
+				i++;
+			}
+			this->_allocator.construct(&this->_element[val_pos], val);
+			this->_size = this->_size + 1;
+			return (&this->_element[val_pos]);
+		}
+
+		/*void insert( iterator position, size_type n, const value_type& val )
+		{
+			
+		}*/
+		/*template <class InputIterator>
+		void insert( iterator position, InputIterator first, InputIterator last )
+		{
+			
+		}*/
+
 		/*-------------------------------------ERASE-----------------------------------*/
 		/*-------------------------------------SWAP------------------------------------*/
 		void swap(vector & x)

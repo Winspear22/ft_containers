@@ -127,9 +127,7 @@ namespace ft
 		/*------------------------------+ Iterator Operator-----------------------------*/
 			random_access_iterator operator+( const difference_type& i ) const
 			{
-				random_access_iterator copy(*this);
-				copy = copy + i;
-				return (copy);
+				return (this->_value + i);
 			}
 		/*---------------------------- -= Iterator Operator-----------------------------*/
 			random_access_iterator& operator-=( const difference_type& i )
@@ -138,17 +136,15 @@ namespace ft
 				return (*this);
 			}
 		/*----------------------------- - Iterator Operator-----------------------------*/
-	/*		random_access_iterator operator-( const difference_type i ) 
+			random_access_iterator operator-( const difference_type i ) 
 			{
-				random_access_iterator copy(*this);
-				copy = copy - i;
-				return (copy);
-			}*/
-			random_access_iterator operator-(const difference_type n)
-			{
-				return (this->_value - n);
+				return (this->_value - i);
 			}
-
+			difference_type operator-(const random_access_iterator &rhs) const
+			{
+				std::cout << "RANDOM ACCESS ITERATOR --2" << std::endl;
+				return (this->_value - rhs._value);
+			}
 			/*Je n'ai pas compris celui-là*/
 			operator random_access_iterator<const value_type>() const 
 			{
