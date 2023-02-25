@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/21 16:42:21 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/25 17:24:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,8 @@ namespace ft
 				if (*this == x)
 					return *this;
 				this->clear();
-				this->_element = x._element;
-				//this->insert(begin(), x.begin(), x.end());
+			//	this->_element = x._element;
+				this->insert(begin(), x.begin(), x.end());
 				return (*this);
 			}
 			
@@ -308,7 +308,6 @@ namespace ft
 			{
 				i = 0;
 				tmp._element = this->_allocator.allocate(n);//this->_element;
-			//	tmp._element = this->_element;
 				if (this->_capacity > 0)
 				{
 					i = 0;		
@@ -370,6 +369,10 @@ namespace ft
 				throw std::out_of_range("\033[1;31mError. \033[1;37mconst at()\033[1;31m memory out of reach.\033[0m");
 			return (this->_element[n]);
 		}
+		reference	front(void)
+		{
+			return (this->_element[0]);
+		}
 		const_reference	front(void) const
 		{
 			return (this->_element[0]);
@@ -408,42 +411,17 @@ namespace ft
 		template <class InputIterator>
   		void assign (typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type first, InputIterator last)
 		{
-			size_type i;
-			size_type dist;
-			
 			if (this->empty() == FAILURE)
-				this->clear();
-			this->reserve(distance(first, last));
-			if (this->_capacity > 0)
-			{
-				i = 0;
-				dist = distance(first, last);
-				while (i < dist)
-				{
-					this->_allocator.construct(&this->_element[i], *first);
-					first++;
-					i++;
-				}	
-			}
+				clear();
+			this->insert (begin(), first, last);
 			return ;
 		}
 		
 		void assign ( size_type n, const value_type& val )
 		{
-			size_type i;
-
 			if (this->empty() == FAILURE)
-				this->clear();
-			this->reserve(n);
-			if (this->_capacity > 0)
-			{
-				i = 0;
-				while (i < n)
-				{
-					this->_allocator.construct(&this->_element[i], val);
-					i++;
-				}	
-			}
+				clear();
+			insert(begin(), n, val);
 			return ;
 		}
 
@@ -495,36 +473,126 @@ namespace ft
 		/*-------------------------------------INSERT----------------------------------*/
 		iterator insert( iterator position, const value_type& val )
 		{
-			difference_type val_pos;
-			difference_type capacity;
-			size_type		i;
+			difference_type 	val_pos;
+			difference_type		i;
 
 			val_pos = position - this->_element;
-			capacity = this->capacity();
-			i = 0;
-			if (val_pos > capacity)
-				reserve(this->_capacity + 1);
-			while (i < this->size())
+			i = this->_size;
+			if (this->_size + 1 > this->_capacity)
+				reserve(this->_size + 1);
+			while (i > val_pos)
 			{	
-				this->_allocator.construct(&this->_element[i], this->_element[i + 1]);
-				this->_allocator.destroy(&this->_element[i + 1]);
-				i++;
+				this->_allocator.construct(&this->_element[i], this->_element[i - 1]);
+				this->_allocator.destroy(&this->_element[i - 1]);
+				i--;
 			}
 			this->_allocator.construct(&this->_element[val_pos], val);
 			this->_size = this->_size + 1;
+
 			return (&this->_element[val_pos]);
 		}
 
-		/*void insert( iterator position, size_type n, const value_type& val )
+		void insert( iterator position, size_type n, const value_type& val )
 		{
+			size_type		 	j;
+			size_type 			max_size;
+			difference_type		i;
+			difference_type 	val_pos;
 			
-		}*/
+			max_size = std::numeric_limits<int>::max();
+			if (n >= max_size)
+				throw std::bad_alloc();
+			else if (n == 0)
+				return ;
+			else
+			{
+				val_pos = position - this->_element;
+				if (this->size() + n > this->_capacity)
+					reserve(this->_size + n);
+				i = this->_size;
+				while (i > val_pos)
+				{
+					this->_allocator.construct(&this->_element[i + n - 1], this->_element[i - 1]);
+					this->_allocator.destroy(&this->_element[i - 1]);
+					i--;
+				}
+				j = -1;
+				while (++j < n)
+					this->_allocator.construct(&this->_element[val_pos + j], val);
+				this->_size = this->_size + n;
+			}
+			return ;
+		}
 		/*template <class InputIterator>
 		void insert( iterator position, InputIterator first, InputIterator last )
 		{
 			
 		}*/
+		
+		template<class InputIterator>
+		void	insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+		{
+			size_type		 	j;
+			//size_type 			max_size;
+			size_type			n;
+			difference_type		i;
+			difference_type 	val_pos;
+			
+			//max_size = std::numeric_limits<int>::max();
+			//if (n >= max_size)
+			//	throw std::bad_alloc();
+			//if (n == 0)
+			//	return ;
+			//else
+			//{
+				n = ft::distance(first, last);
+				val_pos = position - this->_element;
+				if (this->size() + n > this->_capacity)
+					reserve(this->_size + n);
+				i = this->_size;
+				while (i > val_pos)
+				{
+					this->_allocator.construct(&this->_element[i + n - 1], this->_element[i - 1]);
+					this->_allocator.destroy(&this->_element[i - 1]);
+					i--;
+				}
+				j = 0;
+				while (first != last)
+				{
+					this->_allocator.construct(&this->_element[val_pos + j], *first);
+					first++;
+					j++;
+				}
 
+				this->_size = this->_size + n;
+			//}
+			return ;
+		}
+
+		/*template<class InputIterator>
+			void	insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+			{
+				difference_type pos = position - this->_element;
+				size_type n = ft::distance(first, last);
+
+				if (n + this->_size > this->_capacity)
+				{
+					if (this->_size + n > this->_size * 2)
+						reserve(this->_size + n);
+					else
+						reserve(this->_size * 2);
+				}
+				for (difference_type i = this->_size; i > pos; i--)
+				{
+					this->_allocator.construct(&this->_element[i + n - 1], this->_element[i - 1]);
+					this->_allocator.destroy(&this->_element[i - 1]);
+				}
+				for (size_type i = 0; first != last; first++, i++)
+				{
+					this->_allocator.construct(&this->_element[pos + i], *first);
+				}
+				this->_size += n;
+			}*/
 		/*-------------------------------------ERASE-----------------------------------*/
 		/*-------------------------------------SWAP------------------------------------*/
 		void swap(vector & x)
@@ -611,19 +679,41 @@ namespace ft
 	template<typename T, typename Allocator >
 	bool operator!=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
 	{
-		return (!(rhs == lhs));
+		return (!(lhs == rhs));
 	}
 
 	template<typename T, typename Allocator >
-	bool operator<( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+	friend bool operator<( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
 	{
-		return (lhs < rhs);
+		iterator rhs_begin;
+		//ft::iterator rhs_end;
+		iterator lhs_begin;
+		//ft::iterator lhs_end;
+
+		rhs_begin = rhs->begin();
+	//	rhs_end = rhs->end();
+		lhs_begin = lhs->begin();
+	//	lhs_end = lhs->end();
+
+		while (rhs_begin != rhs->end())
+		{
+			if (*rhs_begin != *lsh_begin)
+			{
+				if (*rhs_begin < *lhs_begin)
+					return (FAILURE);
+				else
+					return (SUCCESS);
+			}
+			rhs_begin++;
+		}
+		
+		return (*lhs_begin < *rhs_begin);
 	}
 
 	template<typename T, typename Allocator >
 	bool operator<=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
 	{
-		return (!(lhs < rhs));
+		return (lhs <= rhs);
 	}
 
 	template<typename T, typename Allocator >
@@ -635,7 +725,7 @@ namespace ft
 	template<typename T, typename Allocator >
 	bool operator>=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
 	{
-		return (!(lhs > rhs));
+		return (lhs >= rhs);
 	}
 }
 

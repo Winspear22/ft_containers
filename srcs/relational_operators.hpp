@@ -3,7 +3,7 @@
 
 # include "utils.hpp"
 
-namespace ft
+/*namespace ft
 {
 	template<typename T, typename Allocator > 
 	bool operator==( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
@@ -55,5 +55,5 @@ namespace ft
 		return (!(lhs > rhs));
 	}
 }
-
+*/
 #endif

@@ -142,7 +142,7 @@ namespace ft
 			}
 			difference_type operator-(const random_access_iterator &rhs) const
 			{
-				std::cout << "RANDOM ACCESS ITERATOR --2" << std::endl;
+				//std::cout << "RANDOM ACCESS ITERATOR --2" << std::endl;
 				return (this->_value - rhs._value);
 			}
 			/*Je n'ai pas compris celui-là*/
