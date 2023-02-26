@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 21:06:50 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/25 16:50:48 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/26 16:26:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@
 # define BCYAN "\033[1;36m"
 # define BWHITE "\033[1;37m"
 
-# define BLACK "\033[0;30m"
+/*# define BLACK "\033[0;30m"
 # define RED "\033[0;31m"
 # define GREEN "\033[0;32m"
 # define YELLOW "\033[0;33m"
 # define BLUE "\033[0;34m"
 # define PURPLE "\033[0;35m"
 # define CYAN "\033[0;36m"
-# define WHITE "\033[0;37m"
+# define WHITE "\033[0;37m"*/
 
 # define NORMAL "\033[0m"
 /*====================================================*/

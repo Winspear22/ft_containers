@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/25 17:24:03 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/26 16:22:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,7 +297,8 @@ namespace ft
 			vector			tmp;
 			size_type 		i;
 
-			msg_error = "\033[1;31mError. \033[1;37mreserve() \033[1;31mcommand failed. Max size allocation reached.\033[0m";
+			//msg_error = "\033[1;31mError. \033[1;37mreserve() \033[1;31mcommand failed. Max size allocation reached.\033[0m";
+			msg_error = "vector::reserve";
 			if (n < this->_capacity)
 				return ;
 			else if (n == this->_capacity)
@@ -440,7 +441,7 @@ namespace ft
 			}
 			else if (this->size() == this->capacity() && this->capacity() > 0)
 			{
-				tmp._element = this->_allocator.allocate(this->capacity() + 2); // * 2 en cas de bug
+				tmp._element = this->_allocator.allocate(this->capacity() * 2); // * 2 en cas de bug
 				while (i < this->size())
 				{
 					this->_allocator.construct(&tmp._element[i], this->_element[i]);
@@ -448,7 +449,7 @@ namespace ft
 					i++;
 				}
 				this->_allocator.deallocate(this->_element, this->capacity());
-				this->_capacity = this->_capacity + 2; // * 2 en cas de bug
+				this->_capacity = this->_capacity * 2; // * 2 en cas de bug
 				this->_element = tmp._element;
 			}
 			this->_allocator.construct(&this->_element[this->size()], val);
@@ -523,77 +524,70 @@ namespace ft
 			}
 			return ;
 		}
-		/*template <class InputIterator>
-		void insert( iterator position, InputIterator first, InputIterator last )
-		{
-			
-		}*/
 		
 		template<class InputIterator>
 		void	insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
 		{
 			size_type		 	j;
-			//size_type 			max_size;
 			size_type			n;
 			difference_type		i;
 			difference_type 	val_pos;
-			
-			//max_size = std::numeric_limits<int>::max();
-			//if (n >= max_size)
-			//	throw std::bad_alloc();
-			//if (n == 0)
-			//	return ;
-			//else
-			//{
-				n = ft::distance(first, last);
-				val_pos = position - this->_element;
-				if (this->size() + n > this->_capacity)
-					reserve(this->_size + n);
-				i = this->_size;
-				while (i > val_pos)
-				{
-					this->_allocator.construct(&this->_element[i + n - 1], this->_element[i - 1]);
-					this->_allocator.destroy(&this->_element[i - 1]);
-					i--;
-				}
-				j = 0;
-				while (first != last)
-				{
-					this->_allocator.construct(&this->_element[val_pos + j], *first);
-					first++;
-					j++;
-				}
 
-				this->_size = this->_size + n;
-			//}
+			n = ft::distance(first, last);
+			val_pos = position - this->_element;
+			if (this->size() + n > this->_capacity)
+				reserve(this->_size + n);
+			i = this->_size;
+			while (i > val_pos)
+			{
+				this->_allocator.construct(&this->_element[i + n - 1], this->_element[i - 1]);
+				this->_allocator.destroy(&this->_element[i - 1]);
+				i--;
+			}
+			j = 0;
+			while (first != last)
+			{
+				this->_allocator.construct(&this->_element[val_pos + j], *first);
+				first++;
+				j++;
+			}
+			this->_size = this->_size + n;
+
 			return ;
 		}
-
-		/*template<class InputIterator>
-			void	insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
-			{
-				difference_type pos = position - this->_element;
-				size_type n = ft::distance(first, last);
-
-				if (n + this->_size > this->_capacity)
-				{
-					if (this->_size + n > this->_size * 2)
-						reserve(this->_size + n);
-					else
-						reserve(this->_size * 2);
-				}
-				for (difference_type i = this->_size; i > pos; i--)
-				{
-					this->_allocator.construct(&this->_element[i + n - 1], this->_element[i - 1]);
-					this->_allocator.destroy(&this->_element[i - 1]);
-				}
-				for (size_type i = 0; first != last; first++, i++)
-				{
-					this->_allocator.construct(&this->_element[pos + i], *first);
-				}
-				this->_size += n;
-			}*/
 		/*-------------------------------------ERASE-----------------------------------*/
+		
+		iterator erase( iterator position )
+		{
+			difference_type val_pos;
+			difference_type i;
+
+			val_pos = position - this->_element;
+			i = this->size();
+			while (val_pos < i - 1)
+			{
+				this->_allocator.destroy(&this->_element[val_pos]);
+				this->_allocator.construct(&this->_element[val_pos], this->_element[val_pos + 1]);
+				val_pos++;
+			}
+			this->_allocator.destroy(&this->_element[this->size() - 1]);
+			this->_size = this->_size - 1;
+			return (position);
+		}
+		
+		iterator erase(iterator first, iterator last)
+		{
+				size_type	pos = ft::distance(first, last);
+				for (size_type i = first - this->_element; i < this->_size - pos; i++)
+				{
+					this->_allocator.destroy(&this->_element[i]);
+					this->_allocator.construct(&this->_element[i], this->_element[i + pos]);
+				}
+				for (size_type i = this->_size - pos; i < this->_size; i++)
+					this->_allocator.destroy(&this->_element[i]);
+				this->_size -= pos;
+				return  (first);
+			}
 		/*-------------------------------------SWAP------------------------------------*/
 		void swap(vector & x)
 		{
@@ -643,9 +637,9 @@ namespace ft
 			this->_size = 0;
 			return ;
 		}
-		/*------------------------------------EMPLACE-----------------------------------*/
 
 		
+
 
 		/*==============================================================================*/
 		private:
@@ -683,49 +677,48 @@ namespace ft
 	}
 
 	template<typename T, typename Allocator >
-	friend bool operator<( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
+	bool operator<( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs )
 	{
-		iterator rhs_begin;
-		//ft::iterator rhs_end;
-		iterator lhs_begin;
-		//ft::iterator lhs_end;
+		typename ft::vector<T, Allocator>::const_iterator rhs_begin;
+		typename ft::vector<T, Allocator>::const_iterator lhs_begin;
 
-		rhs_begin = rhs->begin();
-	//	rhs_end = rhs->end();
-		lhs_begin = lhs->begin();
-	//	lhs_end = lhs->end();
-
-		while (rhs_begin != rhs->end())
-		{
-			if (*rhs_begin != *lsh_begin)
-			{
-				if (*rhs_begin < *lhs_begin)
-					return (FAILURE);
-				else
-					return (SUCCESS);
-			}
+		rhs_begin = rhs.begin();
+		lhs_begin = lhs.begin();
+		while ((rhs_begin != rhs.end()) && (lhs_begin != lhs.end()))
+		{	
+			if (*rhs_begin != *lhs_begin)
+				break ;
 			rhs_begin++;
+			lhs_begin++;
 		}
-		
+		if (lhs_begin == lhs.end())
+		{
+			if (rhs_begin != rhs.end())
+				return (SUCCESS);
+			else
+				return (FAILURE);
+		}
+		if (rhs_begin == rhs.end())
+			return (FAILURE);
 		return (*lhs_begin < *rhs_begin);
 	}
 
 	template<typename T, typename Allocator >
 	bool operator<=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
 	{
-		return (lhs <= rhs);
+		return (!(rhs < lhs));
 	}
 
 	template<typename T, typename Allocator >
 	bool operator>( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
 	{
-		return (lhs > rhs);
+		return (rhs < lhs);
 	}
 
 	template<typename T, typename Allocator >
 	bool operator>=( const ft::vector<T,Allocator> & lhs, const ft::vector<T,Allocator> & rhs ) 
 	{
-		return (lhs >= rhs);
+		return (!(lhs < rhs));
 	}
 }
 
