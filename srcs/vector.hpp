@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:04:27 by adaloui           #+#    #+#             */
-/*   Updated: 2023/02/26 16:22:39 by user42           ###   ########.fr       */
+/*   Updated: 2023/02/27 15:32:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ namespace ft
 			this->_allocator = alloc;
 			this->_size = 0;
 
-			//this->_capacity = ft::distance(first, last);
+			this->_capacity = ft::distance(first, last);
 			/*NE PAS OUBLIER DE PROTEGER LE ALLOCATE ET DE TOUT METTRE EN WHILE*/
 
 			
@@ -130,11 +130,11 @@ namespace ft
 			this->_capacity = x._capacity; //je suis pas sur, cela pourrait etre x.size
 			this->_constructor_type = COPY;
 			this->_element = x._element;
-			if (this->_capacity > 0) // PAS SUR D'UTILISER SIZE
+			if (this->_capacity > 0)
 			{
 				i = 0;
-				this->_element = this->_allocator.allocate(this->_capacity); //pas sur d'utiliser size
-				while (i < this->_size) //pas sur d'utiliser size
+				this->_element = this->_allocator.allocate(this->_capacity);
+				while (i < this->_size)
 				{
 					this->_allocator.construct(&this->_element[i], x._element[i]);
 					i++;
@@ -149,27 +149,15 @@ namespace ft
 		/*==============================================================================*/
 			~vector( void )
 			{
-			/*	if (this->_constructor_type == DEFAULT)
-					std::cout << BWHITE << "DEFAULT " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
-				else if (this->_constructor_type == FILL)
-					std::cout << BWHITE << "FILL " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
-				else if (this->_constructor_type == RANGE)
-					std::cout << BWHITE << "RANGE " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
-				else if (this->_constructor_type == COPY)
-					std::cout << BWHITE << "COPY " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
-				else if (this->_constructor_type == EQUAL)
-					std::cout << BWHITE << "EQUAL " << BPURPLE << "vector "<< BRED << "container destructor called." << NORMAL << std::endl;
-			*/
 				size_type i;
-				if (this->_capacity > 0) // PAS SUR D'UTILISER SIZE
+				if (this->_capacity > 0)
 				{
 					i = 0;
-					while (i < this->_capacity) //PAS SUR D'UTILISER SIZE
+					while (i < this->_capacity)
 					{
 						this->_allocator.destroy(&this->_element[i]);
 						i++;
 					}
-					/*PEUT ETRE DEVRA UTILISER IF (THIS->_ELEMENT != NULL)*/
 					if (this->_element != NULL)
 						this->_allocator.deallocate(this->_element, this->_capacity);
 				}
@@ -182,11 +170,10 @@ namespace ft
 		/*==============================================================================*/
 			vector& operator=(const vector& x)
 			{
-				//std::cout << BWHITE << "EQUAL " << BPURPLE << "vector "<< BBLACK << "container overloaded operator called" << NORMAL << std::endl;
 				if (*this == x)
 					return *this;
-				this->clear();
-			//	this->_element = x._element;
+				if (this->empty() == FAILURE)
+					this->clear();
 				this->insert(begin(), x.begin(), x.end());
 				return (*this);
 			}
@@ -284,10 +271,9 @@ namespace ft
 		/*------------------------------------EMPTY-------------------------------------*/
 		bool empty() const
 		{
-		//	std::cout << YELLOW << this->_size << NORMAL << std::endl;
 			if (this->size() == 0)
-				return (SUCCESS);
-			else // The container is empty, it returns true
+				return (SUCCESS); // The container is empty, it returns true
+			else
 				return (FAILURE); // The conainter is not empty, it returns fail
 		}
 		/*------------------------------------RESERVE-----------------------------------*/
@@ -297,7 +283,6 @@ namespace ft
 			vector			tmp;
 			size_type 		i;
 
-			//msg_error = "\033[1;31mError. \033[1;37mreserve() \033[1;31mcommand failed. Max size allocation reached.\033[0m";
 			msg_error = "vector::reserve";
 			if (n < this->_capacity)
 				return ;
@@ -308,7 +293,7 @@ namespace ft
 			else
 			{
 				i = 0;
-				tmp._element = this->_allocator.allocate(n);//this->_element;
+				tmp._element = this->_allocator.allocate(n);
 				if (this->_capacity > 0)
 				{
 					i = 0;		
@@ -319,7 +304,6 @@ namespace ft
 						i++;
 					}
 					this->_allocator.deallocate(this->_element, this->_capacity);
-
 				}
 				this->_element = tmp._element;			
 				this->_capacity = n;
@@ -435,7 +419,6 @@ namespace ft
 			i = 0;
 			if (this->capacity() == 0)
 			{
-				//this->reserve(1);
 				this->_capacity = 1;
 				this->_element = this->_allocator.allocate(this->capacity());
 			}
@@ -535,9 +518,16 @@ namespace ft
 
 			n = ft::distance(first, last);
 			val_pos = position - this->_element;
-			if (this->size() + n > this->_capacity)
-				reserve(this->_size + n);
-			i = this->_size;
+			/*if (this->size() + n > this->_capacity)
+				reserve(this->_size + n);*/
+			if (n + this->_size > this->_capacity)
+			{
+				if (this->_size + n > this->_size * 2)
+					reserve(this->size() + n);
+				else
+					reserve(this->size() * 2);
+			}
+			i = this->size();
 			while (i > val_pos)
 			{
 				this->_allocator.construct(&this->_element[i + n - 1], this->_element[i - 1]);
@@ -595,19 +585,10 @@ namespace ft
 			pointer toto;
 			size_type tmp_size;
 			size_type tmp_capacity;
-			//vector tmp;
-
-			//tmp = *this;
 			
 			toto = this->_element;
 			tmp_capacity = this->_capacity;
 			tmp_size = this->_size;
-		/*	this->_element = x._element;
-			x._element = tmp._element;
-			this->_capacity = x._capacity;
-			x._capacity = tmp._capacity;
-			this->_size = x._size;
-			x._size = tmp._size;*/
 			this->_element = x._element;
 			x._element = toto;
 			this->_capacity = x._capacity;
@@ -637,9 +618,6 @@ namespace ft
 			this->_size = 0;
 			return ;
 		}
-
-		
-
 
 		/*==============================================================================*/
 		private:

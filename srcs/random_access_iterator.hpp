@@ -6,7 +6,7 @@
 namespace ft
 {
 	template <class Iter>
-	class random_access_iterator : ft::iterator<ft::random_access_iterator_tag, Iter> 
+	class random_access_iterator: public ft::iterator<ft::random_access_iterator_tag, Iter> 
 	{
 		public :
 		/*==============================================================================*/
@@ -31,25 +31,21 @@ namespace ft
 		/*==============================================================================*/
 		
 		/*------------------------------Default constructor-----------------------------*/	
-			random_access_iterator(/*ARG*/)//: _value()
+			random_access_iterator(/*ARG*/)
 			{
 				this->_value = NULL;
-				//std::cout << "Vector random access iterator empty default constructor called." << std::endl;
 				return ;
 			}
 		/*------------------------------Default constructor-----------------------------*/	
 			random_access_iterator( pointer _value )
 			{
 				this->_value = _value;
-				//std::cout << "Vector random access iterator default constructor called." << std::endl;
-
 				return ;
 			}
 		/*-------------------------------Copy constructor-----------------------------*/	
 
 			random_access_iterator( const random_access_iterator & copy )
 			{
-				//std::cout << "Vector random access iterator copy constructor called." << std::endl;
 				*this = copy;
 				return ;
 			}
@@ -58,17 +54,14 @@ namespace ft
 		/*==============================================================================*/
 			~random_access_iterator( void )
 			{
-				//std::cout << "Vector random access iterator destructor called." << std::endl;
 				return ;
 			}
-			pointer base(void) const {return this->_value;};
 
 		/*==============================================================================*/
 		/*----------------------------------OPERATOR =----------------------------------*/
 		/*==============================================================================*/
 			random_access_iterator &operator=( const random_access_iterator& rhs )
 			{
-				//std::cout << "Vector random access iterator operator= called." << std::endl;
 				this->_value = rhs._value;
 				return (*this);
 			}
@@ -140,16 +133,23 @@ namespace ft
 			{
 				return (this->_value - i);
 			}
+
 			difference_type operator-(const random_access_iterator &rhs) const
 			{
-				//std::cout << "RANDOM ACCESS ITERATOR --2" << std::endl;
 				return (this->_value - rhs._value);
 			}
+
 			/*Je n'ai pas compris celui-là*/
 			operator random_access_iterator<const value_type>() const 
 			{
 				return (random_access_iterator<const value_type>(this->_value));
 			}
+			
+			pointer base(void) const
+			{
+				return (this->_value);
+			}
+
 		/*-----------------------*/
 			
 
@@ -180,7 +180,8 @@ namespace ft
 		private:
 			pointer _value;
 	};
-		template <class Iterator>
+	
+	template <class Iterator>
 	bool operator<(const ft::random_access_iterator<Iterator>& lhs, const ft::random_access_iterator<Iterator>& rhs)
 	{
 		return (lhs < rhs);
