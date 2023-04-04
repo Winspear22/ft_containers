@@ -139,18 +139,6 @@ namespace ft
 			}
 			return ;
 		}
-			/*vector (const vector& x)
-			{
-				this->_allocator = x._allocator;
-				this->_capacity = x._size;
-				this->_size = x._size;
-				this->_element = x._element;
-				if (this->_capacity)
-					this->_element = this->_allocator.allocate(this->_capacity);
-				for (size_type i = 0; i < this->_size; i++)
-					this->_allocator.construct(&this->_element[i], x._element[i]);
-
-			}*/
 		/*==============================================================================*/
 		
 		/*==============================================================================*/
@@ -254,7 +242,8 @@ namespace ft
 			return (this->_allocator.max_size());
 		}
 		/*------------------------------------RESIZE------------------------------------*/
-		/*void resize(size_type n, value_type val = value_type())
+		/*FAIS FONCTIONNER LE TEST INCEPTION REGARDER LA DIFFERCENCE AVEC MA PROPRE FONCTION*/
+		void resize(size_type n, value_type val = value_type())
 		{
 			size_type i;
 			size_type max_size;
@@ -264,6 +253,7 @@ namespace ft
 			max_size = std::numeric_limits<int>::max();
 			if (n < this->_size)
 			{
+				i = n;
 				while (i < this->_size)
 				{
 					this->_allocator.destroy(&this->_element[i]);
@@ -280,7 +270,10 @@ namespace ft
 					throw std::bad_alloc();
 				else
 				{
-					this->reserve(n);
+					if (this->_size * 2 >= n)
+						this->reserve (this->_size * 2);
+					else
+						this->reserve(n);
 					while (i < n)
 					{
 						this->_allocator.construct(&this->_element[i], val);
@@ -290,29 +283,7 @@ namespace ft
 				}
 			}
 			return ;
-		}*/
-		/*FAIS FONCTIONNER LE TEST INCEPTION REGARDER LA DIFFERCENCE AVEC MA PROPRE FONCTION*/
-		void	resize(size_t n, value_type val = value_type())
-			{
-				if (n < this->_size)
-				{
-					for (size_type i = n; i < this->_size; i++)
-					{
-						this->_allocator.destroy(&this->_element[i]);
-					}
-					this->_size = n;
-				}
-				else if (n > this->_size)
-				{
-						if (n > this->_size * 2)
-							this->reserve(n);
-						else 
-							this->reserve (this->_size * 2);
-						for (size_type i = this->_size; i < n; i++)
-								this->_allocator.construct(&this->_element[i], val);
-						this->_size = n;
-				}		
-			}
+		}
 		/*------------------------------------CAPACITY----------------------------------*/
 		size_type capacity() const
 		{
@@ -324,7 +295,7 @@ namespace ft
 			if (this->size() == 0)
 				return (SUCCESS); // The container is empty, it returns true
 			else
-				return (FAILURE); // The conainter is not empty, it returns fail
+				return (FAILURE); // The container is not empty, it returns fail
 		}
 		/*------------------------------------RESERVE-----------------------------------*/
 		void reserve(size_type n)
@@ -505,7 +476,7 @@ namespace ft
 			return ;
 		}
 		/*-------------------------------------INSERT----------------------------------*/
-		/*iterator insert( iterator position, const value_type& val )
+		iterator insert( iterator position, const value_type& val )
 		{
 			difference_type 	val_pos;
 			difference_type		i;
@@ -542,7 +513,12 @@ namespace ft
 			{
 				val_pos = position - this->_element;
 				if (this->size() + n > this->_capacity)
-					reserve(this->_size + n);
+				{//Verifier ces conditions
+					if (this->_size + n > this->_size * 2)
+						reserve(this->_size + n);
+					else
+						reserve(this->_size * 2);
+				}
 				i = this->_size;
 				while (i > val_pos)
 				{
@@ -594,74 +570,7 @@ namespace ft
 			this->_size = this->_size + n;
 
 			return ;
-		}*/
-
-		iterator insert(iterator position, const value_type &val)
-			{
-				difference_type pos = position - this->_element;
-				
-				reserve(this->_size + 1);
-				for (difference_type i = this->_size; i > pos; i--)
-				{
-					this->_allocator.construct(&this->_element[i], this->_element[i - 1]);
-					this->_allocator.destroy(&this->_element[i - 1]);
-				}
-				this->_allocator.construct(&this->_element[pos], val);
-				this->_size++;
-				return (&this->_element[pos]);
-			} 
-			
-
-			void insert (iterator position, size_type n, const value_type& val)			
-			{
-				if (!n)
-					return ;
-				difference_type pos = position - this->_element ;
-
-				if (n + this->_size > this->_capacity)
-				{
-					if (this->_size + n > this->_size * 2)
-						reserve(this->_size + n);
-					else
-						reserve(this->_size * 2);
-				}
-				for (difference_type i = this->_size; i > pos; i--)
-				{
-					this->_allocator.construct(&this->_element[i + n - 1], this->_element[i - 1]);
-					this->_allocator.destroy(&this->_element[i - 1]);
-				}
-				for (size_type i = 0; i < n; i++)
-				{
-					this->_allocator.construct(&this->_element[pos + i], val);
-				}
-				this->_size += n;
-				
-			} 
-			
-			template<class InputIterator>
-			void	insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
-			{
-				difference_type pos = position - this->_element;
-				size_type n = ft::distance(first, last);
-
-				if (n + this->_size > this->_capacity)
-				{
-					if (this->_size + n > this->_size * 2)
-						reserve(this->_size + n);
-					else
-						reserve(this->_size * 2);
-				}
-				for (difference_type i = this->_size; i > pos; i--)
-				{
-					this->_allocator.construct(&this->_element[i + n - 1], this->_element[i - 1]);
-					this->_allocator.destroy(&this->_element[i - 1]);
-				}
-				for (size_type i = 0; first != last; first++, i++)
-				{
-					this->_allocator.construct(&this->_element[pos + i], *first);
-				}
-				this->_size += n;
-			}
+		}
 		/*-------------------------------------ERASE-----------------------------------*/
 		
 		iterator erase( iterator position )

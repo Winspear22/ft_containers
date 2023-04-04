@@ -55,62 +55,86 @@ namespace ft
 			{
 				return ;
 			}
-			/*-----------*/
+		/*==============================================================================*/
+		/*----------------------------------OPERATOR =----------------------------------*/
+		/*==============================================================================*/
+			template<class OtherIteratorType>
+			reverse_iterator & operator=(const reverse_iterator<OtherIteratorType>& rhs)
+			{
+				if (this->_it != rhs.base())
+					this->_it = rhs.base();
+				return (*this);
+			}
+		/*==============================================================================*/
+		/*-------------------------------------BASE-------------------------------------*/
+		/*==============================================================================*/
 			iterator_type base() const
 			{
 				return (this->_it);
 			}
-			template<class C>
-			reverse_iterator& operator=(const reverse_iterator<C>& src)
-			{
-				this->_it = src.base();
-				return *this;
-			}
+
 			reference operator*() const
 			{
-				iterator_type tmp = _it;
-				return (*--tmp);
+				iterator_type temp;
+				temp = this->base();
+				--temp;
+				return (*temp);
 			}
-			/*reverse_iterator operator+ (difference_type n) const
+			reverse_iterator operator+ (difference_type n) const
 			{
-
+				reverse_iterator temp;
+				temp = *this;
+				temp._it = temp._it - n;
+				return (temp);
 			}
 			reverse_iterator& operator++()
 			{
-
+				this->_it = this->_it - 1;
+				return (*this);
 			}
 			reverse_iterator  operator++(int)
 			{
-
+				reverse_iterator temp;
+				temp = *this;
+				this->_it = this->_it - 1;
+				return (temp);
 			}
 			reverse_iterator& operator+= (difference_type n)
 			{
-
-			}*/
-			reverse_iterator operator+(difference_type n) const 
-			{
-				reverse_iterator	tmp (*this);
-				tmp._it -= n;
-				return (tmp);
-			}
-
-			reverse_iterator &operator++()
-			{
-				--this->_it;
-				return (*this);
-			}
-			reverse_iterator operator++(int)
-			{
-				reverse_iterator tmp = *this;
-				++(*this);
-				return (tmp);
-			}
-			reverse_iterator &operator+=(difference_type n)
-			{
-				this->_it -= n;
+				this->_it = this->_it - n;
 				return (*this);
 			}
 			difference_type operator-(const reverse_iterator<Iterator>& rhs)
+			{
+				difference_type distance;
+
+				distance = rhs.base() - this->_it;
+				return (distance);
+			}
+			reverse_iterator operator- (difference_type n) const
+			{
+				reverse_iterator temp;
+				temp = *this;
+				temp._it = temp._it + n;
+				return (temp);
+			}
+			reverse_iterator& operator--()
+			{
+				this->_it = this->_it + 1;
+				return (*this);
+			}
+			reverse_iterator  operator--(int)
+			{
+				reverse_iterator temp;
+				temp = *this;
+				this->_it = this->_it + 1;
+				return (temp);
+			}
+
+
+
+
+			/*difference_type operator-(const reverse_iterator<Iterator>& rhs)
 			{
 				return (rhs.base() - this->_it);
 			}
@@ -119,8 +143,8 @@ namespace ft
 				reverse_iterator	tmp(*this);
 				tmp._it += n;
 				return (tmp);
-			}
-			reverse_iterator &operator--()
+			}*/
+			/*reverse_iterator &operator--()
 			{
 				++this->_it;
 				return (*this);
@@ -130,7 +154,7 @@ namespace ft
 				reverse_iterator tmp = *this;
 				--(*this);
 				return (tmp);
-			}
+			}*/
 			reverse_iterator &operator-=(difference_type n)
 			{
 				this->_it += n;
