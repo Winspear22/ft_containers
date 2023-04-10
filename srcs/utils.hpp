@@ -21,6 +21,7 @@
 # include <stdexcept>
 # include <limits>
 # include <cstddef>
+# include <functional>
 
 # include "iterator.hpp"
 # include "random_access_iterator.hpp"
@@ -31,6 +32,7 @@
 # include "enable_if.hpp"
 # include "relational_operators.hpp"
 # include "reverse_iterator.hpp"
+# include "map.hpp"
 /*====================================================*/
 
 /*====================================================*/

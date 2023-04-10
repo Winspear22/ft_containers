@@ -104,6 +104,7 @@ namespace ft
 				this->_it = this->_it - n;
 				return (*this);
 			}
+			/*Operateur à mettre en commentaire avant le push final*/
 			difference_type operator-(const reverse_iterator<Iterator>& rhs)
 			{
 				difference_type distance;
@@ -130,43 +131,21 @@ namespace ft
 				this->_it = this->_it + 1;
 				return (temp);
 			}
-
-
-
-
-			/*difference_type operator-(const reverse_iterator<Iterator>& rhs)
+			reverse_iterator& operator-= (difference_type n)
 			{
-				return (rhs.base() - this->_it);
-			}
-			reverse_iterator operator-(difference_type n) const 
-			{
-				reverse_iterator	tmp(*this);
-				tmp._it += n;
-				return (tmp);
-			}*/
-			/*reverse_iterator &operator--()
-			{
-				++this->_it;
-				return (*this);
-			}
-			reverse_iterator operator--(int)
-			{
-				reverse_iterator tmp = *this;
-				--(*this);
-				return (tmp);
-			}*/
-			reverse_iterator &operator-=(difference_type n)
-			{
-				this->_it += n;
+				this->_it = this->_it + n;
 				return (*this);
 			}
 			pointer operator->() const
 			{
-				return &(operator*());
+				iterator_type temp;
+				temp = this->base();
+				--temp;
+				return &(*temp); // Pas sûr que ce soit la meilleure méthode
 			}
 			reference operator[] (difference_type n) const
 			{
-				return *(base() - n - 1);
+				return *(*this + n);
 			}
 
 		private:
@@ -221,7 +200,8 @@ namespace ft
 		return (lhs.base() >= rhs.base());
 	}
 
-	template <class Iterator>
+
+template <class Iterator>
 	bool operator> (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 	{
 		return (lhs.base() < rhs.base());
@@ -232,6 +212,7 @@ namespace ft
 	{
 		return (lhs.base() < rhs.base());
 	}
+/*PAS >=*/
 
 	template <class Iterator>
 	bool operator>= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
@@ -256,14 +237,6 @@ namespace ft
 	{
 		return (rhs.base() - lhs.base());
 	}
-
-/*	template <class InputIterator>
-	typename ft::iterator_traits<InputIterator>::difference_type	distance(InputIterator first, InputIterator last)
-	{
-		typename ft::iterator_traits<InputIterator>::difference_type i = 0;
-		for (; first != last; ++first, i++);
-		return (i);
-	}*/
 }
 
 #endif
