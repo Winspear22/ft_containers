@@ -31,7 +31,22 @@ bool operator==( const ft::vector<T, Allocator> & lhs, const ft::vector<T, Alloc
 template<class T, class Allocator >
 bool operator!=( const ft::vector<T, Allocator> & lhs, const ft::vector<T, Allocator> & rhs )
 {
-	return (!(lhs == rhs));
+	unsigned int i;
+/*verifier que tout se passe bien avec cette méthode*/
+	i = 0;
+	if (lhs.size() == rhs.size())
+	{
+		while (i < lhs.size())
+		{
+			if (lhs[i] != rhs[i])
+				return (true);
+			i++;
+		}
+	}
+	else
+		return (true);
+	return (false);
+	//return (!(lhs == rhs));
 }
 
 template<class T, class Allocator >

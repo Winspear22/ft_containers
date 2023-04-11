@@ -33,6 +33,8 @@
 # include "relational_operators.hpp"
 # include "reverse_iterator.hpp"
 # include "map.hpp"
+# include "pair.hpp"
+# include "make_pair.hpp"
 /*====================================================*/
 
 /*====================================================*/

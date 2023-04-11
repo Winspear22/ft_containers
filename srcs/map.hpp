@@ -2,14 +2,14 @@
 # define MAP_HPP
 
 # include "utils.hpp"
-
+# include "pair.hpp"
 namespace ft
 {
 
 template <	class Key,
 			class T,
 			class Compare = std::less<Key>,
-			class Alloc = std::allocator<std::pair<const Key,T> > >//changer pair
+			class Alloc = std::allocator<ft::pair<const Key,T> > >//changer pair
 class map
 {
 	public:
@@ -18,7 +18,7 @@ class map
 		/*==============================================================================*/
 			typedef Key											key_type;
 			typedef T											mapped_type;
-			typedef	std::pair<const key_type, mapped_type>		value_type; // changer le std en ft
+			typedef	ft::pair<const key_type, mapped_type>		value_type; // changer le std en ft
 			typedef Compare										key_compare;
 	/*class value_compare value_comp() const : public std::binary_function<value_type, value_type, bool> // changer le std en ft
 	{
@@ -95,7 +95,6 @@ class map
 			{
 				return ;
 			}
-
 		/*==============================================================================*/
 		/*----------------------------------OPERATOR =----------------------------------*/
 		/*==============================================================================*/
