@@ -3,6 +3,7 @@
 
 # include "utils.hpp"
 # include "pair.hpp"
+# include "binary_function.hpp"
 namespace ft
 {
 
@@ -27,7 +28,7 @@ class map
 	/*===========================================================================*/
 	/*									A RETIRER 								 */
 	/*===========================================================================*/
-	class value_compare : public std::binary_function<value_type, value_type, bool>
+		class value_compare : ft::binary_function<value_type, value_type, bool>
 		{
 			friend class ft::map<Key, T, Compare, Alloc>;
 			protected:
@@ -102,7 +103,14 @@ class map
 			{
 				if (*this == x)
 					return (*this);
-				/*TERMINER*/
+				else
+				{
+					this->_allocator = x._allocator;
+					this->_size = x._size;
+					this->_comp = x.comp;
+				}
+				return (*this);
+				/*A TERMINER*/
 			}
 
 

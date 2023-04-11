@@ -35,6 +35,7 @@
 # include "map.hpp"
 # include "pair.hpp"
 # include "make_pair.hpp"
+# include "binary_function.hpp"
 /*====================================================*/
 
 /*====================================================*/
