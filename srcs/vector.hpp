@@ -593,17 +593,16 @@ namespace ft
 		
 		iterator erase(iterator first, iterator last)
 		{
-				size_type	pos = ft::distance(first, last);
-				for (size_type i = first - this->_element; i < this->_size - pos; i++)
-				{
-					this->_allocator.destroy(&this->_element[i]);
-					this->_allocator.construct(&this->_element[i], this->_element[i + pos]);
-				}
-				for (size_type i = this->_size - pos; i < this->_size; i++)
-					this->_allocator.destroy(&this->_element[i]);
-				this->_size -= pos;
-				return  (first);
+			size_type	i;
+
+			i = last - first;
+			while (i > 0)
+			{
+				this->erase(first);
+				i--;
 			}
+			return (first);
+		}
 		/*-------------------------------------SWAP------------------------------------*/
 		void swap(vector & x)
 		{

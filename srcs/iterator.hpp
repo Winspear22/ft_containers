@@ -2,9 +2,7 @@
 # define VECTOR_ITERATOR_HPP
 
 # include "utils.hpp"
-# include "vector.hpp"
-
-//class vector;
+//# include "vector.hpp"
 
 namespace ft
 {

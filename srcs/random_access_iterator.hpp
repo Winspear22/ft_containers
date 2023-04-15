@@ -61,7 +61,7 @@ namespace ft
 		/*==============================================================================*/
 		/*----------------------------------OPERATOR =----------------------------------*/
 		/*==============================================================================*/
-			random_access_iterator &operator=( const random_access_iterator& rhs )
+			random_access_iterator & operator=( const random_access_iterator& rhs )
 			{
 				this->_value = rhs._value;
 				return (*this);
@@ -140,41 +140,45 @@ namespace ft
 				return (this->_value - rhs._value);
 			}
 
-			/*Je n'ai pas compris celui-là*/
+			/*Gère le cas où *a est constant, on peut utiliser la méthode 
+			de spécialisation des classe, mais ça ne sera pas accepté car
+			il faudrait modifier la forme du template en 
+			template <class Iter, bool is_const>*/
 			operator random_access_iterator<const value_type>() const 
 			{
-				return (random_access_iterator<const value_type>(this->_value));
+				random_access_iterator<const value_type> it(this->_value);
+				return (it);
 			}
-			
 			pointer base(void) const
 			{
 				return (this->_value);
 			}
 
-		/*-----------------------*/
-			
+		/*==============================================================================*/
+		/*----------------------------COMPARISON OPERATORS------------------------------*/
+		/*==============================================================================*/			
 
-			bool operator>( const random_access_iterator& rhs ) const 
+			bool operator>( const random_access_iterator & rhs ) const 
 			{
 				return (this->_value > rhs._value);
 			}
-			bool operator>=( const random_access_iterator& rhs ) const 
+			bool operator>=( const random_access_iterator & rhs ) const 
 			{
 				return (this->_value >= rhs._value);
 			}
-			bool operator<( const random_access_iterator& rhs ) const 
+			bool operator<( const random_access_iterator & rhs ) const 
 			{
 				return (this->_value < rhs._value);
 			}
-			bool operator<=( const random_access_iterator& rhs ) const 
+			bool operator<=( const random_access_iterator & rhs ) const 
 			{
 				return (this->_value <= rhs._value);
 			}
-			bool operator==( const random_access_iterator& rhs ) const 
+			bool operator==( const random_access_iterator & rhs ) const 
 			{
 				return (this->_value == rhs._value);
 			}
-			bool operator!=( const random_access_iterator& rhs ) const 
+			bool operator!=( const random_access_iterator & rhs ) const 
 			{
 				return (this->_value != rhs._value);
 			}

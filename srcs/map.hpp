@@ -6,7 +6,6 @@
 # include "binary_function.hpp"
 namespace ft
 {
-
 template <	class Key,
 			class T,
 			class Compare = std::less<Key>,

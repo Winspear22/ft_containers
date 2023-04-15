@@ -23,9 +23,9 @@
 # include <cstddef>
 # include <functional>
 
+# include "iterator_traits.hpp"
 # include "iterator.hpp"
 # include "random_access_iterator.hpp"
-# include "iterator_traits.hpp"
 # include "random_access_iterator_tag.hpp"
 # include "swap.hpp"
 # include "is_integral.hpp"
