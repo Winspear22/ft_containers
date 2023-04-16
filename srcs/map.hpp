@@ -300,22 +300,6 @@ class map
 
 			}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private:
 		size_type														_size;
 		allocator_type													_allocator;
