@@ -157,7 +157,7 @@ namespace ft
 		/*==============================================================================*/
 		/*----------------------------COMPARISON OPERATORS------------------------------*/
 		/*==============================================================================*/			
-
+			/*Sert à comparer les itérateurs du même type, à savoir const/const ou nonconst/nonconst*/
 			bool operator>( const random_access_iterator & rhs ) const 
 			{
 				return (this->_value > rhs._value);
@@ -186,6 +186,9 @@ namespace ft
 			pointer _value;
 	};
 	
+	/*On rajoute ces cas de figure pour gérer le cas où on a un const iterator. On ne le met pas directement dans 
+	la structure car on a déjà des surcharges d'opérateurs et il ne semble pas que celles qui vont suivre soient mentionnées
+	dans le main, ça permet de faire passer le test 1 */
 	template <class Iterator1, class Iterator2>
 	bool operator<(const ft::random_access_iterator<Iterator1> lhs, const ft::random_access_iterator<Iterator2> rhs) 
 	{
@@ -233,23 +236,25 @@ namespace ft
 		return (lhs - n);
 	}
 
+/*La première surcharge d'opérateur + permet d'additionner deux itérateurs de même type (Iterator).*/
 	template <class Iterator>
 	typename ft::random_access_iterator<Iterator>::difference_type operator+(const ft::random_access_iterator<Iterator>& lhs, const ft::random_access_iterator<Iterator>& rhs) 
 	{
 		return (lhs + rhs);
 	}
-
+/*La deuxième surcharge d'opérateur + permet d'additionner deux itérateurs de types différents (Iterator1 et Iterator2). */
 	template <class Iterator1, class Iterator2>
 	typename ft::random_access_iterator<Iterator1>::difference_type operator+(const ft::random_access_iterator<Iterator1> lhs, const ft::random_access_iterator<Iterator2> rhs) 
 	{
 		return (lhs.base() + rhs.base());
 	}
-
+/*La troisième surcharge d'opérateur + est la plus utile et la plus couramment utilisée. Elle permet d'ajouter un entier (de type difference_type) à un itérateur de type random_access_iterator.*/
 	template <typename Iterator>
 	ft::random_access_iterator<Iterator> operator+(typename random_access_iterator<Iterator>::difference_type n, ft::random_access_iterator<Iterator>& lhs) 
 	{
 		return (lhs + n);
 	}
+
 }
 
 #endif

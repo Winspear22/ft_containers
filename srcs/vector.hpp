@@ -206,8 +206,7 @@ namespace ft
 			return (const_iterator(this->_element + this->size()));
 		}
 		/*------------------------------------RBEGIN------------------------------------*/
-		/*------------------------------------REND--------------------------------------*/
-		reverse_iterator rbegin(void)
+			reverse_iterator rbegin(void)
 			{
 				return (reverse_iterator(this->_element + this->_size));
 			}
@@ -216,7 +215,7 @@ namespace ft
 			{
 				return (const_reverse_iterator(this->_element + this->_size));
 			}
-			
+			/*------------------------------------REND--------------------------------------*/
 			reverse_iterator rend(void)
 			{
 				return (reverse_iterator(this->_element));
@@ -353,7 +352,7 @@ namespace ft
 		/*==============================================================================*/
 		
 		/*==============================================================================*/
-		/*-----------------------------------MODIFIERS----------------------------------*/
+		/*-------------------------------ELEMENT ACCESS---------------------------------*/
 		/*==============================================================================*/
 		reference operator[]( size_type n )
 		{
@@ -415,7 +414,7 @@ namespace ft
 		/*==============================================================================*/
 		/*------------------------------------ASSIGN------------------------------------*/
 		template <class InputIterator>
-  		void assign (typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type first, InputIterator last)
+		void assign (typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type first, InputIterator last)
 		{
 			if (this->empty() == FAILURE)
 				clear();
